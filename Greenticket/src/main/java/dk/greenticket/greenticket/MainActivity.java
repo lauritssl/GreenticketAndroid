@@ -1,30 +1,31 @@
 package dk.greenticket.greenticket;
 
 import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.facebook.LoggingBehavior;
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.Settings;
-import com.facebook.model.GraphUser;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class MainActivity extends Activity {
+import dk.greenticket.GTmodels.GTConnect;
+import dk.greenticket.GTmodels.GTConnectListner;
+import dk.greenticket.GTmodels.GTUser;
+
+public class MainActivity extends Activity{
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_main);
     }
 
 
@@ -46,6 +47,34 @@ public class MainActivity extends Activity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void GTLogin_btn_click(View view){
+        TextView emailField = (TextView) findViewById(R.id.loginEmailField);
+        String email = emailField.getText().toString();
+        TextView passwordField = (TextView) findViewById(R.id.loginPasswordField);
+        String password = passwordField.getText().toString();
+
+        //final GTUser user = new GTUser(email,password);
+        final GTUser user = new GTUser("lau_rits@hotmail.com","123lsl");
+        ((GTApplication) this.getApplication()).setUser(user);
+        new Thread(new Runnable(){
+            public void run(){
+                user.logUserIn();
+                userLoginChange(user);
+            }
+        }).start();;
+
+
+    }
+
+    public void userLoginChange(GTUser user){
+        if(user.isLoggedIn()){
+            Intent intent = new Intent(this, LoggedinActivity.class);
+            startActivity(intent);
+        }else{
+            Toast.makeText(getApplicationContext(),"Fejl, prøv igen..", Toast.LENGTH_LONG);
+        }
     }
 
 }
