@@ -12,7 +12,7 @@ public class SettingsFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View V = inflater.inflate(R.layout.settings, container, false);
+        View V = inflater.inflate(R.layout.fragment_settings, container, false);
 
         return V;
     }

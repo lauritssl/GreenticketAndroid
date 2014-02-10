@@ -12,6 +12,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
@@ -47,26 +48,25 @@ public class GTConnect{
         JSONObject json = null;
         HttpClient httpClient = new DefaultHttpClient();
 
-        Log.e("url", urlPath.toString());
+
+        Log.i("GTConnect:url", urlPath.toString());
 
         try {
             HttpGet request = new HttpGet(urlPath);
             request.addHeader("Authorization", hash);
             HttpResponse httpResponse = null;
-            httpResponse = httpClient.execute(request);
-            HttpEntity httpEntity = httpResponse.getEntity();
-            is = httpEntity.getContent();
+            BasicResponseHandler responseHandler = new BasicResponseHandler();
+            result = httpClient.execute(request, responseHandler);
+            //httpResponse = httpClient.execute(request);
+            //HttpEntity httpEntity = httpResponse.getEntity();
+            //is = httpEntity.getContent();
         } catch (Exception e) {
-            Log.e("connection", e.toString());
+            Log.e("GTConnect:connection", e.toString());
         }
-
-
-        Log.e("******IS", is.toString());
-        httpClient.getConnectionManager().shutdown();
 
         try {
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
+            /*BufferedReader reader = new BufferedReader(new InputStreamReader(
                     is, "UTF-8"), 8);
             StringBuilder sb = new StringBuilder();
             String line = null;
@@ -74,20 +74,19 @@ public class GTConnect{
                 sb.append(line + "\n");
             }
             is.close();
-            result = sb.toString();
+            result = sb.toString();*/
+            Log.e("GTConnect:RESULT", result);
         } catch (Exception e) {
-            Log.e("Buffer Error", "Error converting result " + e.toString());
+            Log.e("GTConnect:Buffer Error", "Error converting result " + e.toString());
         }
-
-        Log.e("RESTULT", result);
 
         try {
             json = new JSONObject(result);
         } catch (JSONException e) {
-            Log.e("JSON Parser", "Error parsing data " + e.toString());
+            Log.e("GTConnect:JSON Parser", "Error parsing data " + e.toString());
         }
 
-        Log.e("json", json.toString());
+        Log.i("GTConnect:json", json.toString());
 
         return json;
     }
@@ -99,9 +98,9 @@ public class GTConnect{
         String hash = path + SECRET;
         JSONObject json = null;
         HttpClient httpClient = new DefaultHttpClient();
-        Log.e("URL", urlPath);
+        Log.i("GTConnect:URL", urlPath);
 
-        Log.e("PARA", para.toString());
+        Log.i("GTConnect:PARA", para.toString());
         try {
             HttpPost httpPost = new HttpPost(urlPath);
             httpPost.addHeader("Authorization", hash);
@@ -111,7 +110,7 @@ public class GTConnect{
             HttpEntity httpEntity = httpResponse.getEntity();
             is = httpEntity.getContent();
         } catch (Exception e) {
-            Log.e("connection", e.toString());
+            Log.e("GTConnect:connection", e.toString());
         }
 
         try {
@@ -123,21 +122,20 @@ public class GTConnect{
             String line = null;
             while ((line = reader.readLine()) != null) {
                 sb.append(line + "\n");
-                Log.e("line", line);
             }
             is.close();
             result = sb.toString();
         } catch (Exception e) {
-            Log.e("Buffer Error", "Error converting result " + e.toString());
+            Log.e("GTConnect:Buffer Error", "Error converting result " + e.toString());
         }
 
         try {
             json = new JSONObject(result);
         } catch (Exception e) {
-            Log.e("JSON Parser", "Error parsing data " + e.toString());
+            Log.e("GTConnect:JSON Parser", "Error parsing data " + e.toString());
         }
 
-        Log.e("json", json.toString());
+        Log.i("GTConnect:json", json.toString());
 
         return json;
     }

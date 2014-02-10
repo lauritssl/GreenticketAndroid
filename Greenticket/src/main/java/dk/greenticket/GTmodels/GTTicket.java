@@ -8,9 +8,15 @@ import java.net.URL;
  * Created by lalan on 28/01/14.
  */
 public class GTTicket {
-    private String QRID;
-    private boolean cheched;
+    private String QRID, type;
+    private Boolean checked;
     private String SECRET =  "MqHtRec35Zr6lAAOFZtb";
+
+    public GTTicket(String QRID, String type, Boolean checked){
+        this.QRID = QRID;
+        this.type = type;
+        this.checked = checked;
+    }
 
     public GTTicket(String QRID){
         this.QRID = QRID;
@@ -30,7 +36,7 @@ public class GTTicket {
         return QRID;
     }
 
-    public boolean isCheched() {
-        return cheched;
+    public boolean isChecked() {
+        return checked;
     }
 }

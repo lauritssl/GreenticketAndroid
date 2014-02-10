@@ -1,10 +1,15 @@
 package dk.greenticket.GTmodels;
 
+import android.util.Log;
+
+import java.util.Date;
+
 /**
  * Created by lalan on 28/01/14.
  */
 public class GTEvent {
-    private String title, coverLink, date, endDate, organizer;
+    private String title, coverLink, organizer;
+    private Date date, endDate;
     private Integer id;
     private Boolean active;
 
@@ -24,19 +29,19 @@ public class GTEvent {
         this.coverLink = coverLink;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
@@ -64,7 +69,12 @@ public class GTEvent {
         this.active = active;
     }
 
-    public GTEvent(){
-
+    public GTEvent(String title, String coverLink, Date date, Date endDate, Integer id, Boolean active){
+        this.title = title;
+        this.coverLink = coverLink;
+        this.date = date;
+        this.endDate = endDate;
+        this.id = id;
+        this.active = active;
     }
 }

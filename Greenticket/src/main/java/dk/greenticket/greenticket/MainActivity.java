@@ -2,21 +2,13 @@ package dk.greenticket.greenticket;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import dk.greenticket.GTmodels.GTConnect;
-import dk.greenticket.GTmodels.GTConnectListner;
 import dk.greenticket.GTmodels.GTUser;
 
 public class MainActivity extends Activity{
@@ -56,24 +48,28 @@ public class MainActivity extends Activity{
         String password = passwordField.getText().toString();
 
         //final GTUser user = new GTUser(email,password);
-        final GTUser user = new GTUser("lau_rits@hotmail.com","123lsl");
+        //final GTUser user = new GTUser("lau_rits@hotmail.com","123lsl");
+        final GTUser user = new GTUser("spjerx@gmail.com","deltaforce");
         ((GTApplication) this.getApplication()).setUser(user);
         new Thread(new Runnable(){
             public void run(){
                 user.logUserIn();
                 userLoginChange(user);
             }
-        }).start();;
+        }).start();
 
 
     }
 
     public void userLoginChange(GTUser user){
         if(user.isLoggedIn()){
+            GTApplication application = (GTApplication) getApplication();
+            application.setUser(user);
+
             Intent intent = new Intent(this, LoggedinActivity.class);
             startActivity(intent);
         }else{
-            Toast.makeText(getApplicationContext(),"Fejl, prøv igen..", Toast.LENGTH_LONG);
+            Toast.makeText(getApplicationContext(),"Fejl, prøv igen..", Toast.LENGTH_LONG).show();
         }
     }
 
