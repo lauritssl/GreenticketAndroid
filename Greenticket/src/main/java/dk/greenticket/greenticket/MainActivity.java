@@ -49,8 +49,8 @@ public class MainActivity extends Activity{
         String password = passwordField.getText().toString();
 
         //final GTUser user = new GTUser(email,password);
-        //final GTUser user = new GTUser("lau_rits@hotmail.com","123lsl");
-        final GTUser user = new GTUser("spjerx@gmail.com","deltaforce");
+        final GTUser user = new GTUser("lau_rits@hotmail.com","123lsl");
+        //final GTUser user = new GTUser("spjerx@gmail.com","deltaforce");
         ((GTApplication) this.getApplication()).setUser(user);
         new Thread(new Runnable(){
             public void run(){

@@ -11,8 +11,8 @@
 
 
     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="#fff"
         >
 
@@ -25,21 +25,25 @@
             android:src="@drawable/defaultcover"
             android:id="@+id/ticketCover"/>
 
-        <TextView
+
+        <dk.greenticket.greenticket.CirclePageIndicator
+            android:id="@+id/indicator"
+            android:layout_below="@id/ticketCover"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:background="#eee"
             android:layout_width="fill_parent"
-            android:layout_below="@+id/ticketCover"
-            android:layout_height="15dp"
-            android:id="@+id/orderIDField"
-            android:textColor="#000"
-            android:text="#"/>
+            />
 
 
         <android.support.v4.view.ViewPager
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:layout_below="@+id/orderIDField"
-            android:id="@+id/ticketInfo"
-            android:background="#ccc"/>
+            android:layout_below="@id/indicator"
+            android:id="@+id/ticketInfoPager"
+            android:background="#eee"/>
+
+
 
     </RelativeLayout>
 

@@ -137,7 +137,7 @@ public class GTUser{
                                 String type = ticket.getJSONObject("type").getString("name");
                                 String checkedString = ticket.getString("checked");
                                 Boolean checked = checkedString.equalsIgnoreCase("1");
-                                GTTicket gtTicket = new GTTicket(QRID, type, checked);
+                                GTTicket gtTicket = new GTTicket(QRID, type, checked, orderID, email);
                                 gtOrder.addTicket(gtTicket);
                             }
                         }

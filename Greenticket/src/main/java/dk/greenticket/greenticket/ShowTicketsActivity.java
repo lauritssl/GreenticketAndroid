@@ -2,10 +2,13 @@ package dk.greenticket.greenticket;
 
 import android.app.Activity;
 import android.app.ActionBar;
-import android.app.Fragment;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.hardware.display.DisplayManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,12 +27,16 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.encoder.QRCode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dk.greenticket.GTmodels.GTOrder;
+import dk.greenticket.GTmodels.GTTicket;
 import dk.greenticket.GTmodels.GTUser;
 
-public class ShowTicketsActivity extends Activity {
+public class ShowTicketsActivity extends FragmentActivity {
     TextView ordreIDField;
-    GTQRMaker qrMaker;
+    GTTicketPageAdapter pageAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,29 +44,41 @@ public class ShowTicketsActivity extends Activity {
 
         Integer orderID = getIntent().getExtras().getInt("order");
 
-
-        ordreIDField = (TextView) findViewById(R.id.orderIDField);
-
         GTApplication application = (GTApplication) this.getApplication();
         GTUser user = application.getUser();
 
         GTOrder order = user.getOrder(orderID);
-        Log.e("asdas", ""+ order.getOrderID().toString());
-
-        //ordreIDField.setText(order.getOrderID().toString());
 
         FetchableImageView cover = (FetchableImageView) findViewById(R.id.ticketCover);
-        ImageView qrCodeView = (ImageView) findViewById(R.id.ticketQR);
-
         cover.setImage(order.getEvent().getCoverLink(), R.drawable.defaultcover);
 
-        Log.e("QR********", "" );
+        List<Fragment> fragments = getFragments(order.getTickets());
+        pageAdapter = new GTTicketPageAdapter(getSupportFragmentManager(), fragments);
+        ViewPager pager = (ViewPager)findViewById(R.id.ticketInfoPager);
+        pager.setAdapter(pageAdapter);
+        pager.setOffscreenPageLimit(0);
 
-        qrMaker = new GTQRMaker();
-        Bitmap qr =  qrMaker.convertToBitmap(order.getTickets().get(0).getQRID(), 650, 650);
+        if(order.getTickets().size()>1){
+            CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.indicator);
+            indicator.setViewPager(pager);
+            indicator.setCurrentItem(pager.getChildCount());
+            indicator.setFillColor(Color.BLACK);
+            indicator.setStrokeColor(Color.BLACK);
+            indicator.setRadius(7.5f);
+        }
 
 
-        qrCodeView.setImageBitmap(qr);
+    }
+
+    private List<Fragment> getFragments(ArrayList<GTTicket> tickets){
+        List<Fragment> ticketList = new ArrayList<Fragment>();
+
+        for(int i = 0; i < tickets.size(); i++){
+            ticketList.add(GTTicketFragment.newInstance(tickets.get(i)));
+        }
+
+
+        return ticketList;
 
     }
 

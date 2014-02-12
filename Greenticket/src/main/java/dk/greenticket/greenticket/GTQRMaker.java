@@ -28,7 +28,7 @@ public class GTQRMaker {
 
         Map<EncodeHintType, Object> hints = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
         //hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-        hints.put(EncodeHintType.MARGIN, 1);
+        hints.put(EncodeHintType.MARGIN, 0);
 
         try {
             BitMatrix qrMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width,height,hints);
