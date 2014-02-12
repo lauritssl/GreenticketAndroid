@@ -15,7 +15,7 @@ public class LoggedinActivity extends FragmentActivity {
 
         mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-        mTabHost.addTab(mTabHost.newTabSpec("Orders").setIndicator("Orders"),
+        mTabHost.addTab(mTabHost.newTabSpec("Tickets").setIndicator("Tickets"),
                 OrdersFragment.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("Events").setIndicator("Events"),
                 EventsFragment.class, null);

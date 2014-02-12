@@ -64,9 +64,9 @@ public class GTConnect{
             Log.e("GTConnect:connection", e.toString());
         }
 
-        try {
+        /*try {
 
-            /*BufferedReader reader = new BufferedReader(new InputStreamReader(
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
                     is, "UTF-8"), 8);
             StringBuilder sb = new StringBuilder();
             String line = null;
@@ -74,11 +74,13 @@ public class GTConnect{
                 sb.append(line + "\n");
             }
             is.close();
-            result = sb.toString();*/
+            result = sb.toString();
             Log.e("GTConnect:RESULT", result);
         } catch (Exception e) {
             Log.e("GTConnect:Buffer Error", "Error converting result " + e.toString());
-        }
+        }*/
+
+        Log.e("GTConnect:connection", result);
 
         try {
             json = new JSONObject(result);
@@ -105,15 +107,18 @@ public class GTConnect{
             HttpPost httpPost = new HttpPost(urlPath);
             httpPost.addHeader("Authorization", hash);
             httpPost.setEntity(new UrlEncodedFormEntity(para, HTTP.UTF_8));
-            HttpResponse httpResponse = null;
-            httpResponse = httpClient.execute(httpPost);
-            HttpEntity httpEntity = httpResponse.getEntity();
-            is = httpEntity.getContent();
+            //HttpResponse httpResponse = null;
+            BasicResponseHandler responseHandler = new BasicResponseHandler();
+            result = httpClient.execute(httpPost, responseHandler);
+            /*HttpEntity httpEntity = httpResponse.getEntity();
+            is = httpEntity.getContent();*/
         } catch (Exception e) {
             Log.e("GTConnect:connection", e.toString());
         }
 
-        try {
+        Log.e("GTConnect:connection", result);
+
+        /*try {
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     is, "UTF-8"), 8);
@@ -127,7 +132,7 @@ public class GTConnect{
             result = sb.toString();
         } catch (Exception e) {
             Log.e("GTConnect:Buffer Error", "Error converting result " + e.toString());
-        }
+        }*/
 
         try {
             json = new JSONObject(result);

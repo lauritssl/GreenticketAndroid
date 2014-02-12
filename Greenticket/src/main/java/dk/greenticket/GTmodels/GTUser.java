@@ -97,49 +97,55 @@ public class GTUser{
         try {
             if (result.getBoolean("success")){
                 JSONArray resultOrders = result.getJSONArray("orders");
-                Log.e("GT:user", resultOrders.toString());
                 orders.clear();
                 for(int i = 0; i < resultOrders.length(); i++ ) {
 
                     JSONObject order = resultOrders.getJSONObject(i);
                     String email = order.getString("email");
-                    Log.e("GT:user", "ORDER " + i);
                     Integer orderID = order.getInt("id");
                     String payedString = order.getString("payed");
                     Boolean payed = payedString.equalsIgnoreCase("1");
                     Date buyTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(order.getString("buyTime"));
 
                     JSONObject event = order.getJSONObject("event");
-                    String title = event.getString("title");
-                    String coverLink = "https://greenticket.dk" + event.getString("cover");
-                    Log.e("GT:user", "COVERLINK: "+coverLink);
-                    Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(event.getString("eventStart"));
-                    Date endDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(event.getString("eventEnd"));
-                    Integer id = event.getInt("id");
-                    String activeString = event.getString("active");
-                    Boolean active = activeString.equalsIgnoreCase("1");
+                    GTEvent gtevent;
+                    if (event.has("title")){
+                        String title =  event.getString("title");
 
-                    GTEvent gtevent = new GTEvent(title,coverLink,date,endDate,id,active);
+                        String coverLink = event.getString("cover");
 
-                    GTOrder gtOrder = new GTOrder(email, orderID, payed, gtevent, buyTime);
+                        if (!coverLink.equalsIgnoreCase("null")){
+                            coverLink = "https://greenticket.dk" + coverLink;
+                        }
 
-                    orders.add(gtOrder);
+                        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(event.getString("eventStart"));
+                        Date endDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(event.getString("eventEnd"));
+                        Integer id = event.getInt("id");
+                        String activeString = event.getString("active");
+                        Boolean active = activeString.equalsIgnoreCase("1");
 
-                    JSONArray ordersTickets = order.getJSONArray("tickets");
+                        gtevent = new GTEvent(title,coverLink,date,endDate,id,active);
+                        GTOrder gtOrder = new GTOrder(email, orderID, payed, gtevent, buyTime);
+                        orders.add(gtOrder);
 
-                    for(int j = 0; j < ordersTickets.length(); j++ ) {
+                        JSONArray ordersTickets = order.getJSONArray("tickets");
+                        if (ordersTickets.length() > 0){
+                            for(int j = 0; j < ordersTickets.length(); j++ ) {
 
-                        Log.e("GT:user", "ORDER " + i + " TICKET " +j);
+                                JSONObject ticket = ordersTickets.getJSONObject(j);
+                                String QRID = ticket.getString("qr");
+                                String type = ticket.getJSONObject("type").getString("name");
+                                String checkedString = ticket.getString("checked");
+                                Boolean checked = checkedString.equalsIgnoreCase("1");
+                                GTTicket gtTicket = new GTTicket(QRID, type, checked);
+                                gtOrder.addTicket(gtTicket);
+                            }
+                        }
 
-
-                        JSONObject ticket = ordersTickets.getJSONObject(j);
-                        String QRID = ticket.getString("qr");
-                        String type = ticket.getJSONObject("type").getString("name");
-                        String checkedString = ticket.getString("checked");
-                        Boolean checked = checkedString.equalsIgnoreCase("1");
-                        GTTicket gtTicket = new GTTicket(QRID, type, checked);
-                        gtOrder.addTicket(gtTicket);
+                    }else{
+                        Log.e("GTUser ", "No Event on order");
                     }
+
                 }
                 return true;
             }
@@ -216,5 +222,15 @@ public class GTUser{
 
     public ArrayList<GTOrder> getOrders() {
         return orders;
+    }
+
+    public GTOrder getOrder(int id){
+        for(int i = 0; i < orders.size(); i++){
+            GTOrder order = orders.get(i);
+            if (order.getOrderID() == id){
+                return  order;
+            }
+        }
+        return null;
     }
 }

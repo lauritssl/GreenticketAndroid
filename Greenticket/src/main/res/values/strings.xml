@@ -10,5 +10,8 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_logged_in">LoggedInActivity</string>
     <string name="title_activity_loggedin">LoggedinActivity</string>
+    <string name="title_activity_show_tickets">ShowTicketsActivity</string>
+    <string name="settings_account">account</string>
+    <string name="settings_settings">settings</string>
 
 </resources>

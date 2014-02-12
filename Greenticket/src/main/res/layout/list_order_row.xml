@@ -1,14 +1,48 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="50dp">
-    
-    <TextView
+    android:layout_height="220dp"
+    android:background="#ccc">
+
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/orderID"
-        android:text="HSAHDSH"/>
+        android:layout_height="200dp"
+        android:background="#b3d233"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:id="@+id/orderEventTitle"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="25dp"
+            android:text="Title"
+            android:textColor="#000"
+            android:textSize="40dp"/>
+
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:id="@+id/orderID"
+            android:background="#474747"
+            android:layout_marginTop="160dp"
+            android:textColor="#FFF"
+            android:textSize="30dp"
+            android:text="#1231"
+         />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:id="@+id/orderCover"
+            android:rotation="90"
+            android:src="@drawable/defaultcover"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
     
     
     
-    
-</RelativeLayout>
+</LinearLayout>

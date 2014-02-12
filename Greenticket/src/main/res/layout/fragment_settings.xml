@@ -1,14 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".DeviceFragment" >
+    tools:context=".DeviceFragment"
+    android:background="#ccc">
+
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Settings" />
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/settings_account"
+        android:textColor="#474747"
+        android:textAllCaps="true"
+        android:textSize="25dp"/>
 
-</LinearLayout>
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/usermale"
+        android:layout_marginTop="90dp"
+        android:layout_marginLeft="20dp"/>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:id="@+id/settingsNameField"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="95dp"
+        android:text="Laurits Langberg"
+        android:textColor="#474747"
+        android:textAllCaps="true"
+        android:textSize="15dp"
+        android:textAlignment="center"/>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/message"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="20dp"/>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:id="@+id/settingsMailField"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="155dp"
+        android:text="lau_rits@hotmail.com"
+        android:textColor="#474747"
+        android:textAllCaps="true"
+        android:textSize="15dp"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="220dp"
+        android:text="@string/settings_settings"
+        android:textColor="#474747"
+        android:textAllCaps="true"
+        android:textSize="25dp"/>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/exit"
+        android:layout_marginTop="285dp"
+        android:layout_marginLeft="20dp"/>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:id="@+id/settingsLogOut"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="290dp"
+        android:text="Log ud"
+        android:textColor="#474747"
+        android:textAllCaps="true"
+        android:textSize="15dp"
+        android:textAlignment="center"/>
+
+
+</RelativeLayout>

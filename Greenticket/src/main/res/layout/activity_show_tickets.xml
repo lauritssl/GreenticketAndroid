@@ -1,0 +1,52 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="dk.greenticket.greenticket.ShowTicketsActivity"
+    tools:ignore="MergeRootFrame"
+    android:theme="@android:style/Theme.Translucent"
+    android:layout_margin="30dp">
+
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#fff"
+        >
+
+
+        <com.applidium.shutterbug.FetchableImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitStart"
+            android:adjustViewBounds="true"
+            android:src="@drawable/defaultcover"
+            android:id="@+id/ticketCover"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_below="@+id/ticketCover"
+            android:layout_height="15dp"
+            android:id="@+id/orderIDField"
+            android:textColor="#000"
+            android:text="#"/>
+
+
+        <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/orderIDField"
+            android:id="@+id/ticketInfo"
+            android:background="#ccc"/>
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+ </FrameLayout>

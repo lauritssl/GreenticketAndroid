@@ -1,12 +1,14 @@
 package dk.greenticket.GTmodels;
 
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by lalan on 28/01/14.
  */
-public class GTOrder {
+public class GTOrder{
     private String email;
     private Integer orderID;
     private Boolean payed;

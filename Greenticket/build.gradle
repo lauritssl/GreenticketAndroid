@@ -25,4 +25,6 @@ android {
 dependencies {
     compile files('libs/android-support-v4.jar')
     compile project(':libraries:facebook')
+    compile files('lib/zxing.jar')
+    compile files('lib/Shutterbug.jar')
 }

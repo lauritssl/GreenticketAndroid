@@ -1,5 +1,6 @@
 package dk.greenticket.greenticket;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -7,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -16,6 +19,7 @@ import dk.greenticket.GTmodels.GTUser;
 public class OrdersFragment extends ListFragment  {
     GTUser user;
     ArrayList<GTOrder> orders;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,20 +39,22 @@ public class OrdersFragment extends ListFragment  {
         return V;
     }
 
-    /*@Override
+    @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        GTOrder item = (GTOrder) getListAdapter().getItem(position);
-        Toast.makeText(getActivity().getApplicationContext(), item.getOrderID().toString(), Toast.LENGTH_LONG).show();
-    }*/
+        GTOrder gtOrder = (GTOrder) getListAdapter().getItem(position);
+        Intent intent = new Intent(getActivity(), ShowTicketsActivity.class);
+        intent.putExtra("order", gtOrder.getOrderID());
+        startActivity(intent);
+
+    }
 
     public void UserOrderLoad(final GTUser user){
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 orders = user.getOrders();
-                Log.e("GT:TicketFragment", "size " + orders.size());
-                Log.e("GT:TicketFragment", "Gettingorder");
                 GTOrderListAdapter adapter = new GTOrderListAdapter(getActivity(), R.layout.list_order_row, orders);
+
                 setListAdapter(adapter);
             }
         });  
