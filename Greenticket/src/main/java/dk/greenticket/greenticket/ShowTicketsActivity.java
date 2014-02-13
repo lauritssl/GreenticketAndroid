@@ -55,6 +55,7 @@ public class ShowTicketsActivity extends FragmentActivity {
         List<Fragment> fragments = getFragments(order.getTickets());
         pageAdapter = new GTTicketPageAdapter(getSupportFragmentManager(), fragments);
         ViewPager pager = (ViewPager)findViewById(R.id.ticketInfoPager);
+
         pager.setAdapter(pageAdapter);
         pager.setOffscreenPageLimit(0);
 
@@ -64,7 +65,7 @@ public class ShowTicketsActivity extends FragmentActivity {
             indicator.setCurrentItem(pager.getChildCount());
             indicator.setFillColor(Color.BLACK);
             indicator.setStrokeColor(Color.BLACK);
-            indicator.setRadius(7.5f);
+            indicator.setRadius(7.0f);
         }
 
 
@@ -74,13 +75,15 @@ public class ShowTicketsActivity extends FragmentActivity {
         List<Fragment> ticketList = new ArrayList<Fragment>();
 
         for(int i = 0; i < tickets.size(); i++){
-            ticketList.add(GTTicketFragment.newInstance(tickets.get(i)));
+            Integer ticketCount = i + 1;
+            ticketList.add(GTTicketFragment.newInstance(tickets.get(i),ticketCount));
         }
 
 
         return ticketList;
 
     }
+
 
 
 

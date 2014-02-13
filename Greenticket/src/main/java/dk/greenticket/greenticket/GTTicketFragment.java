@@ -18,13 +18,13 @@ import dk.greenticket.GTmodels.GTTicket;
  */
 public class GTTicketFragment extends Fragment {
 
-    public static final GTTicketFragment newInstance(GTTicket ticket){
+    public static final GTTicketFragment newInstance(GTTicket ticket, Integer ticketCount){
         GTTicketFragment f = new GTTicketFragment();
         Bundle bdl = new Bundle(4);
         bdl.putString("qr", ticket.getQRID());
         bdl.putString("type", ticket.getType());
         bdl.putInt("orderid", ticket.getOrderID());
-        bdl.putString("email", ticket.getEmail());
+        bdl.putInt("ticketCount", ticketCount);
         f.setArguments(bdl);
         return f;
     }
@@ -32,20 +32,23 @@ public class GTTicketFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         String qr = getArguments().getString("qr");
-        //String email = getArguments().getString("email");
+        Integer ticketCount = getArguments().getInt("ticketCount");
         String type = getArguments().getString("type");
         Integer orderID = getArguments().getInt("orderid");
         View v = inflater.inflate(R.layout.fragment_gtticket, container, false);
 
         ImageView qrCodeView = (ImageView) v.findViewById(R.id.ticketQR);
+        int size = container.findViewById(R.id.ticketInfoPager).getMeasuredWidth();
         GTQRMaker qrMaker = new GTQRMaker();
-        Bitmap qrPic =  qrMaker.convertToBitmap(qr, 650, 650);
+        Bitmap qrPic =  qrMaker.convertToBitmap(qr, size, size);
 
 
         qrCodeView.setImageBitmap(qrPic);
 
         TextView textInfoView = (TextView)v.findViewById(R.id.textView1);
-        textInfoView.setText("#"+orderID.toString()+" - "+type);
+        textInfoView.setText("#"+orderID.toString()+" - "+type+"#"+ticketCount);
         return v;
     }
+
+
 }

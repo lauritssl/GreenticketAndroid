@@ -17,7 +17,6 @@ import dk.greenticket.GTmodels.GTOrder;
 import dk.greenticket.GTmodels.GTUser;
 
 public class OrdersFragment extends ListFragment  {
-    GTUser user;
     ArrayList<GTOrder> orders;
 
 

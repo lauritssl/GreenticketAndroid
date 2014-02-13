@@ -1,8 +1,10 @@
 package dk.greenticket.greenticket;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
+import android.widget.TabWidget;
 
 public class LoggedinActivity extends FragmentActivity {
     // Fragment TabHost as mTabHost
@@ -21,9 +23,17 @@ public class LoggedinActivity extends FragmentActivity {
         //        EventsFragment.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("Settings").setIndicator("Settings"),
                 SettingsFragment.class, null);
+
+        TabWidget tabWidget = mTabHost.getTabWidget();
+        for(int i = 0; i < tabWidget.getChildCount(); i++){
+            tabWidget.getChildAt(i).setBackgroundResource(R.drawable.tab_selector);
+        }
+
     }
 
     @Override
     public void onBackPressed() {
     }
+
+
 }
