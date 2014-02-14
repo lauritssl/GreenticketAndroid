@@ -1,75 +1,190 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/app_bg"
+    android:background="@drawable/login_bg"
     tools:context=".MainActivity"
     tools:ignore="MergeRootFrame" >
 
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="20dp">
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:id="@+id/bottomView"
+        android:layout_alignParentBottom="true"/>
 
-        <com.facebook.widget.LoginButton
-            android:id="@+id/authButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            />
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:inputType="textEmailAddress"
-            android:id="@+id/loginEmailField"
-            android:hint="Email"
-            android:background="#FFFFFF"/>
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:inputType="textPassword"
-            android:id="@+id/loginPasswordField"
-            android:hint="password"
-            android:background="#FFFFFF"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:id="@+id/gt_button"
-            android:src="@drawable/gt_button_clear"
-            android:onClick="GTLogin_btn_click"
-            android:text="GTLogin"/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-        </LinearLayout>
-
+    // GTLogin
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_gravity="center_horizontal|bottom"
+        android:layout_height="70dp"
+        android:layout_marginTop="75dp"
         android:src="@drawable/logo"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        />
-</FrameLayout>
+        android:onClick="LogoClick"
+        android:id="@+id/LoginLogo"/>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/login_mail"
+        android:layout_below="@id/LoginLogo"
+        android:layout_marginTop="70dp"
+        android:id="@+id/LoginEmail"
+        android:visibility="invisible"
+        >
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="90dp"
+            android:layout_centerInParent="true"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:inputType="textEmailAddress"
+            android:id="@+id/loginEmailField"
+            android:background="#00000000"
+            android:textColorHint="#fff"
+            android:hint="email"/>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/LoginPassword"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/LoginEmail"
+        android:background="@drawable/login_pass"
+        android:visibility="invisible"
+        >
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="90dp"
+            android:layout_centerInParent="true"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:inputType="textPassword"
+            android:id="@+id/loginPasswordField"
+            android:background="#00000000"
+            android:textColorHint="#fff"
+            android:hint="password"/>
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/LoginButton"
+        android:layout_below="@id/LoginPassword"
+        android:background="@drawable/login_btn"
+        android:layout_marginTop="20dp"
+        android:onClick="GTLoginClickButton"
+        android:visibility="invisible">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="#000"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textAllCaps="true"
+            android:text="log ind"/>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:id="@+id/LoginBack"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@id/bottomView"
+        android:onClick="LoginBackClick"
+        android:visibility="invisible">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="8dp"
+            android:id="@+id/LoginBackText"
+            android:textColor="#FFF"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textAllCaps="true"
+            android:text="Tilbage til log ind skærm"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginLeft="260dp"
+            android:src="@drawable/login_exit"/>
+
+
+    </RelativeLayout>
+
+
+    //Choose LOGIN
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/GTLoginButton"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_above="@id/bottomView"
+        android:background="@drawable/login_mail"
+        android:onClick="GTLoginClick">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="#FFF"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:text="Log ind med Greenticket"/>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/FBLoginButton"
+        android:background="@drawable/login_fb"
+        android:layout_above="@id/GTLoginButton"
+        android:layout_marginBottom="20dp"
+        android:onClick="FBLoginClick">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="#FFF"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:text="Log ind med Facebook"/>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

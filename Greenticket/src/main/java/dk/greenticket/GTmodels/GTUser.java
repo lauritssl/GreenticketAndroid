@@ -117,6 +117,13 @@ public class GTUser{
                         if (!coverLink.equalsIgnoreCase("null")){
                             coverLink = "https://greenticket.dk" + coverLink;
                         }
+                        String orgName = "";
+
+                        if (!event.isNull("organisation")){
+                            orgName = event.getJSONObject("organisation").getString("name");
+
+                        }
+                        Log.e("TITLE + ORG", title+" - "+orgName);
 
                         Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(event.getString("eventStart"));
                         Date endDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(event.getString("eventEnd"));
@@ -124,7 +131,8 @@ public class GTUser{
                         String activeString = event.getString("active");
                         Boolean active = activeString.equalsIgnoreCase("1");
 
-                        gtevent = new GTEvent(title,coverLink,date,endDate,id,active);
+
+                        gtevent = new GTEvent(title,coverLink,date,endDate,id,active, orgName);
                         GTOrder gtOrder = new GTOrder(email, orderID, payed, gtevent, buyTime);
                         orders.add(gtOrder);
 
@@ -170,14 +178,23 @@ public class GTUser{
                 for(int i = 0; i < resultEvents.length(); i++ ) {
                     JSONObject event = resultEvents.getJSONObject(i);
                     String title = event.getString("title");
-                    String coverLink = "https://greenticket.dk" + event.getString("cover");
+                    String coverLink = event.getString("cover");
+                    if (!coverLink.equalsIgnoreCase("null")){
+                        coverLink = "https://greenticket.dk" + coverLink;
+                    }
+                    String orgName = "";
+
+                    if (event.getJSONObject("organisation").has("name")){
+                        orgName = event.getJSONObject("organisation").getString("name");
+                    }
+
                     Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(event.getString("eventStart"));
                     Date endDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(event.getString("eventEnd"));
                     Integer id = event.getInt("id");
                     String activeString = event.getString("active");
                     Boolean active = activeString.equalsIgnoreCase("1");
 
-                    GTEvent gtEvent = new GTEvent(title,coverLink,date,endDate,id,active);
+                    GTEvent gtEvent = new GTEvent(title,coverLink,date,endDate,id,active, orgName);
 
                     events.add(gtEvent);
                 }

@@ -69,12 +69,13 @@ public class GTEvent {
         this.active = active;
     }
 
-    public GTEvent(String title, String coverLink, Date date, Date endDate, Integer id, Boolean active){
+    public GTEvent(String title, String coverLink, Date date, Date endDate, Integer id, Boolean active, String orgName){
         this.title = title;
         this.coverLink = coverLink;
         this.date = date;
         this.endDate = endDate;
         this.id = id;
         this.active = active;
+        this.organizer = orgName;
     }
 }

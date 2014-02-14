@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ public class MainActivity extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
     }
 
 
@@ -42,15 +44,64 @@ public class MainActivity extends Activity{
         return super.onOptionsItemSelected(item);
     }
 
-    public void GTLogin_btn_click(View view){
+    public void GTLoginClick(View view){
+        RelativeLayout loginEmail = (RelativeLayout) findViewById(R.id.LoginEmail);
+        loginEmail.setVisibility(View.VISIBLE);
+        RelativeLayout loginPassword = (RelativeLayout) findViewById(R.id.LoginPassword);
+        loginPassword.setVisibility(View.VISIBLE);
+        RelativeLayout loginBack = (RelativeLayout) findViewById(R.id.LoginBack);
+        loginBack.setVisibility(View.VISIBLE);
+        RelativeLayout loginButton = (RelativeLayout) findViewById(R.id.LoginButton);
+        loginButton.setVisibility(View.VISIBLE);
+
+        RelativeLayout FBLoginButton = (RelativeLayout) findViewById(R.id.FBLoginButton);
+        FBLoginButton.setVisibility(View.INVISIBLE);
+        RelativeLayout GTLoginButton = (RelativeLayout) findViewById(R.id.GTLoginButton);
+        GTLoginButton.setVisibility(View.INVISIBLE);
+
+
+
+    }
+
+    public void LoginBackClick(View view){
+        RelativeLayout loginEmail = (RelativeLayout) findViewById(R.id.LoginEmail);
+        loginEmail.setVisibility(View.INVISIBLE);
+        RelativeLayout loginPassword = (RelativeLayout) findViewById(R.id.LoginPassword);
+        loginPassword.setVisibility(View.INVISIBLE);
+        RelativeLayout loginBack = (RelativeLayout) findViewById(R.id.LoginBack);
+        loginBack.setVisibility(View.INVISIBLE);
+        RelativeLayout loginButton = (RelativeLayout) findViewById(R.id.LoginButton);
+        loginButton.setVisibility(View.INVISIBLE);
+
+        RelativeLayout FBLoginButton = (RelativeLayout) findViewById(R.id.FBLoginButton);
+        FBLoginButton.setVisibility(View.VISIBLE);
+        RelativeLayout GTLoginButton = (RelativeLayout) findViewById(R.id.GTLoginButton);
+        GTLoginButton.setVisibility(View.VISIBLE);
+
+
+
+    }
+
+
+    public void FBLoginClick(View view){
+        Toast.makeText(getApplicationContext(),"FBclick", Toast.LENGTH_SHORT).show();
+
+
+    }
+
+    public void LogoClick(View view){
+        userLogIn();
+
+
+    }
+
+    public void GTLoginClickButton(View view){
         TextView emailField = (TextView) findViewById(R.id.loginEmailField);
         String email = emailField.getText().toString();
         TextView passwordField = (TextView) findViewById(R.id.loginPasswordField);
         String password = passwordField.getText().toString();
 
-        //final GTUser user = new GTUser(email,password);
-        final GTUser user = new GTUser("lau_rits@hotmail.com","123lsl");
-        //final GTUser user = new GTUser("spjerx@gmail.com","deltaforce");
+        final GTUser user = new GTUser(email,password);
         ((GTApplication) this.getApplication()).setUser(user);
         new Thread(new Runnable(){
             public void run(){
@@ -61,6 +112,28 @@ public class MainActivity extends Activity{
 
 
     }
+
+
+    public void userLogIn(){
+        /*TextView emailField = (TextView) findViewById(R.id.loginEmailField);
+        String email = emailField.getText().toString();
+        TextView passwordField = (TextView) findViewById(R.id.loginPasswordField);
+        String password = passwordField.getText().toString();*/
+
+        //final GTUser user = new GTUser(email,password);
+        //final GTUser user = new GTUser("lau_rits@hotmail.com","123lsl");
+        final GTUser user = new GTUser("spjerx@gmail.com","deltaforce");
+        ((GTApplication) this.getApplication()).setUser(user);
+        new Thread(new Runnable(){
+            public void run(){
+                user.logUserIn();
+                userLoginChange(user);
+            }
+        }).start();
+
+
+    }
+
 
     public void userLoginChange(GTUser user){
         if(user.isLoggedIn()){
