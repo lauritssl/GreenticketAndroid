@@ -80,7 +80,7 @@ public class GTConnect{
             Log.e("GTConnect:Buffer Error", "Error converting result " + e.toString());
         }*/
 
-        Log.e("GTConnect:connection", result);
+        Log.e("GTConnect:result", result);
 
         try {
             json = new JSONObject(result);
@@ -96,7 +96,7 @@ public class GTConnect{
     public JSONObject POST(List<NameValuePair> para) {
         String result = "";
         InputStream is = null;
-        String urlPath = "https://greenticket.dk/api/login";
+        String urlPath = url + path;
         String hash = path + SECRET;
         JSONObject json = null;
         HttpClient httpClient = new DefaultHttpClient();
@@ -116,7 +116,7 @@ public class GTConnect{
             Log.e("GTConnect:connection", e.toString());
         }
 
-        Log.e("GTConnect:connection", result);
+        Log.e("GTConnect:result", result);
 
         /*try {
 

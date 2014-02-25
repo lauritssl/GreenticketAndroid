@@ -1,5 +1,7 @@
 package dk.greenticket.GTmodels;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import org.apache.http.NameValuePair;
@@ -14,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import dk.greenticket.greenticket.GTApplication;
+
 /**
  * Created by lalan on 28/01/14.
  */
@@ -23,40 +27,79 @@ public class GTUser{
     private boolean loggedIn;
     private ArrayList<GTEvent> events;
     private ArrayList<GTOrder> orders;
+    private Context context;
 
 
-   public GTUser(int facebookID, String email){
-       this(email, null);
+   public GTUser(int facebookID, String email, Context context){
+       this.email = email;
        this.fbID = new Integer(facebookID).toString();
+       this.loggedIn = false;
+       this.events = new ArrayList<GTEvent>();
+       this.orders = new ArrayList<GTOrder>();
+       this.context = context;
+
 
    }
 
-   public GTUser(String email, String password ){
+    public GTUser(String email, String firstname, String lastname,Context context){
+        this.email = email;
+        this.loggedIn = true;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.events = new ArrayList<GTEvent>();
+        this.orders = new ArrayList<GTOrder>();
+        this.context = context;
+
+
+    }
+
+   public GTUser(String email, String password, Context context ){
        this.email = email;
        this.password = password;
        this.loggedIn = false;
        this.events = new ArrayList<GTEvent>();
        this.orders = new ArrayList<GTOrder>();
+       this.fbID = "";
+       this.context = context;
 
    }
 
    public boolean logUserIn(){
-       GTConnect con = new GTConnect("login");
-       List<NameValuePair> para = new ArrayList<NameValuePair>();
-       para.add(new BasicNameValuePair("email",email));
-       para.add(new BasicNameValuePair("password",password));
-       JSONObject result = con.POST(para);
-       try{
-           if (result.getBoolean("success")){
-                this.loggedIn = true;
-                loadInfo(result);
-           }else{
-               this.loggedIn = false;
+       if (fbID.isEmpty()){
+           GTConnect con = new GTConnect("login");
+           List<NameValuePair> para = new ArrayList<NameValuePair>();
+           para.add(new BasicNameValuePair("email",email));
+           para.add(new BasicNameValuePair("password",password));
+           JSONObject result = con.POST(para);
+           try{
+               if (result.getBoolean("success")){
+                   this.loggedIn = true;
+                   loadInfo(result);
+               }else{
+                   this.loggedIn = false;
+               }
+           } catch (JSONException e){
+               e.printStackTrace();
            }
-       } catch (JSONException e){
-           e.printStackTrace();
-       }
 
+       }else{
+           GTConnect con = new GTConnect("login/facebook");
+           List<NameValuePair> para = new ArrayList<NameValuePair>();
+           para.add(new BasicNameValuePair("fbID",fbID));
+           para.add(new BasicNameValuePair("email",email));
+           JSONObject result = con.POST(para);
+           try{
+               if (result.getBoolean("success")){
+                   this.loggedIn = true;
+                   loadInfo(result);
+               }else{
+                   this.loggedIn = false;
+               }
+           } catch (JSONException e){
+               e.printStackTrace();
+           }
+       }
+       Log.e("login" + firstname + lastname, ""+isLoggedIn());
        return isLoggedIn();
    }
 
@@ -91,81 +134,88 @@ public class GTUser{
     }
 
     public boolean loadOrders(){
-        GTConnect con = new GTConnect("users/"+email+"/orders");
-        JSONObject result = con.GET();
+        GTApplication application = (GTApplication) context.getApplicationContext();
+        orders.clear();
+        GTDatabase db = new GTDatabase(context);
+        if(application.isNetworkAvailable()){
+            GTConnect con = new GTConnect("users/"+email+"/orders");
+            JSONObject result = con.GET();
+            try {
 
-        try {
-            if (result.getBoolean("success")){
-                JSONArray resultOrders = result.getJSONArray("orders");
-                orders.clear();
-                for(int i = 0; i < resultOrders.length(); i++ ) {
+                if (result.getBoolean("success")){
+                    JSONArray resultOrders = result.getJSONArray("orders");
+                    for(int i = 0; i < resultOrders.length(); i++ ) {
 
-                    JSONObject order = resultOrders.getJSONObject(i);
-                    String email = order.getString("email");
-                    Integer orderID = order.getInt("id");
-                    String payedString = order.getString("payed");
-                    Boolean payed = payedString.equalsIgnoreCase("1");
-                    Date buyTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(order.getString("buyTime"));
+                        JSONObject order = resultOrders.getJSONObject(i);
+                        String email = order.getString("email");
+                        Integer orderID = order.getInt("id");
+                        String payedString = order.getString("payed");
+                        Boolean payed = payedString.equalsIgnoreCase("1");
+                        Date buyTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(order.getString("buyTime"));
 
-                    JSONObject event = order.getJSONObject("event");
-                    GTEvent gtevent;
-                    if (event.has("title")){
-                        String title =  event.getString("title");
+                        JSONObject event = order.getJSONObject("event");
+                        GTEvent gtevent;
+                        if (event.has("title")){
+                            String title =  event.getString("title");
 
-                        String coverLink = event.getString("cover");
+                            String coverLink = event.getString("cover");
 
-                        if (!coverLink.equalsIgnoreCase("null")){
-                            coverLink = "https://greenticket.dk" + coverLink;
-                        }
-                        String orgName = "";
-
-                        if (!event.isNull("organisation")){
-                            orgName = event.getJSONObject("organisation").getString("name");
-
-                        }
-                        Log.e("TITLE + ORG", title+" - "+orgName);
-
-                        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(event.getString("eventStart"));
-                        Date endDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(event.getString("eventEnd"));
-                        Integer id = event.getInt("id");
-                        String activeString = event.getString("active");
-                        Boolean active = activeString.equalsIgnoreCase("1");
-
-
-                        gtevent = new GTEvent(title,coverLink,date,endDate,id,active, orgName);
-                        GTOrder gtOrder = new GTOrder(email, orderID, payed, gtevent, buyTime);
-                        orders.add(gtOrder);
-
-                        JSONArray ordersTickets = order.getJSONArray("tickets");
-                        if (ordersTickets.length() > 0){
-                            for(int j = 0; j < ordersTickets.length(); j++ ) {
-
-                                JSONObject ticket = ordersTickets.getJSONObject(j);
-                                String QRID = ticket.getString("qr");
-                                String type = ticket.getJSONObject("type").getString("name");
-                                String checkedString = ticket.getString("checked");
-                                Boolean checked = checkedString.equalsIgnoreCase("1");
-                                GTTicket gtTicket = new GTTicket(QRID, type, checked, orderID, email);
-                                gtOrder.addTicket(gtTicket);
+                            if (!coverLink.equalsIgnoreCase("null")){
+                                coverLink = "https://greenticket.dk" + coverLink;
                             }
+                            String orgName = "";
+
+                            if (!event.isNull("organisation")){
+                                orgName = event.getJSONObject("organisation").getString("name");
+
+                            }
+                            Log.e("TITLE + ORG", title+" - "+orgName);
+
+                            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(event.getString("eventStart"));
+                            Date endDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(event.getString("eventEnd"));
+                            Integer id = event.getInt("id");
+                            String activeString = event.getString("active");
+                            Boolean active = activeString.equalsIgnoreCase("1");
+
+
+                            gtevent = new GTEvent(title,coverLink,date,endDate,id,active, orgName);
+                            Log.e("GTUser event", ""+db.addEvent(gtevent));
+                            GTOrder gtOrder = new GTOrder(email, orderID, payed, gtevent, buyTime);
+                            Log.e("GTUser order", ""+db.addOrder(gtOrder));
+                            //orders.add(gtOrder);
+
+                            JSONArray ordersTickets = order.getJSONArray("tickets");
+
+                            if (ordersTickets.length() > 0){
+                                for(int j = 0; j < ordersTickets.length(); j++ ) {
+
+                                    JSONObject ticket = ordersTickets.getJSONObject(j);
+                                    String QRID = ticket.getString("qr");
+                                    String type = ticket.getJSONObject("type").getString("name");
+                                    String checkedString = ticket.getString("checked");
+                                    Boolean checked = checkedString.equalsIgnoreCase("1");
+                                    GTTicket gtTicket = new GTTicket(QRID, type, checked, orderID, email);
+                                    db.addTicket(gtTicket);
+                                    //gtOrder.addTicket(gtTicket);
+                                }
+                            }
+                        }else{
+                            Log.e("GTUser ", "No Event on order");
                         }
 
-                    }else{
-                        Log.e("GTUser ", "No Event on order");
                     }
-
                 }
-                return true;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }catch (Exception e) {
-            e.printStackTrace();
         }
 
-        return false;
+        orders = db.getOrders();
+        return true;
     }
 
     private boolean loadEvents(){

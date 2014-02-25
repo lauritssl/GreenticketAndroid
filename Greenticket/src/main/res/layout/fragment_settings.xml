@@ -7,6 +7,11 @@
     tools:context=".DeviceFragment"
     android:background="#ccc">
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:id="@+id/settingsBottomView"
+        android:layout_alignParentBottom="true"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -70,26 +75,82 @@
         android:textAllCaps="true"
         android:textSize="25dp"/>
 
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/logout_exit"
-        android:layout_marginTop="285dp"
-        android:layout_marginLeft="20dp"/>
+   <RelativeLayout
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:id="@+id/settingsLogout"
+       android:layout_marginTop="285dp">
+
+       <ImageView
+           android:layout_width="40dp"
+           android:layout_height="40dp"
+           android:src="@drawable/logout_exit"
+           android:layout_marginLeft="20dp"/>
+
+
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="40dp"
+           android:layout_marginLeft="80dp"
+           android:layout_marginTop="5dp"
+           android:text="Log ud"
+           android:textColor="#474747"
+           android:textAllCaps="true"
+           android:textSize="15dp"
+           android:textAlignment="center"/>
+
+       </RelativeLayout>
 
 
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:id="@+id/settingsLogOut"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="290dp"
-        android:text="Log ud"
+        android:layout_height="25dp"
+        android:id="@+id/settingsVersion"
+        android:layout_above="@id/settingsBottomView"
+        android:layout_alignParentRight="true"
+        android:paddingRight="15dp"
+        android:text="@string/version"
         android:textColor="#474747"
-        android:textAllCaps="true"
-        android:textSize="15dp"
-        android:textAlignment="center"/>
+        />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:id="@+id/settingsPrivacy"
+        android:paddingLeft="15dp"
+        android:layout_marginBottom="0dp"
+        android:text="@string/privacy_policy"
+        android:textColor="#474747"
+        android:textSize="20sp"
+        android:layout_above="@id/settingsVersion"
+        android:clickable="true"
+        />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:id="@+id/settingsTermsEvent"
+        android:paddingLeft="15dp"
+        android:text="@string/terms_of_event"
+        android:textColor="#474747"
+        android:textSize="20sp"
+        android:layout_above="@id/settingsPrivacy"
+        android:clickable="true"
+        />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:id="@+id/settingsTermsService"
+        android:paddingLeft="15dp"
+        android:text="@string/terms_of_service"
+        android:textColor="#474747"
+        android:textSize="20sp"
+        android:layout_above="@id/settingsTermsEvent"
+        android:clickable="true"
+        />
 
 
 </RelativeLayout>

@@ -3,21 +3,28 @@
 
     <string name="app_id">251682631638868</string>
     <string name="app_name">Greenticket</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="version">Version: 1.0</string>
+    <string name="action_settings">Title</string>
     <string name="title_activity_tickets">TicketsActivity</string>
     <string name="title_activity_events">Events</string>
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_logged_in">LoggedInActivity</string>
     <string name="title_activity_loggedin">LoggedinActivity</string>
     <string name="title_activity_show_tickets">ShowTicketsActivity</string>
+    <string name="title_activity_web">WebActivity</string>
     <string name="settings_account">account</string>
     <string name="settings_settings">settings</string>
+    <string name="terms_of_service">Handelsbetingelser</string>
+    <string name="terms_of_event">Eventbetingelser</string>
+    <string name="privacy_policy">Privatpolitik</string>
+    <string name="login_fail">Der skete en fejl. prøv igen..</string>
+    <string name="no_network">Intet netværk!</string>
 
 
     <string name="pull_to_refresh_pull_label">Pull to refresh...</string>
     <string name="pull_to_refresh_release_label">Release to refresh...</string>
     <string name="pull_to_refresh_refreshing_label">Loading...</string>
     <string name="pull_to_refresh_tap_label">Tap to refresh...</string>
+
+
 
 </resources>

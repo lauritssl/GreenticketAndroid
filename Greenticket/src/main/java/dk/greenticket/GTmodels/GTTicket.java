@@ -53,4 +53,8 @@ public class GTTicket {
     public String getEmail() {
         return email;
     }
+
+    public Boolean getChecked() {
+        return checked;
+    }
 }

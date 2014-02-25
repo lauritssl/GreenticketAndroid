@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.widget.TabWidget;
+import android.widget.Toast;
 
 public class LoggedinActivity extends FragmentActivity {
     // Fragment TabHost as mTabHost

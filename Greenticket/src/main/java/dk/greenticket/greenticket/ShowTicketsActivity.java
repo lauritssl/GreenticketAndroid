@@ -35,7 +35,6 @@ import dk.greenticket.GTmodels.GTTicket;
 import dk.greenticket.GTmodels.GTUser;
 
 public class ShowTicketsActivity extends FragmentActivity {
-    TextView ordreIDField;
     GTTicketPageAdapter pageAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,7 @@ public class ShowTicketsActivity extends FragmentActivity {
         ViewPager pager = (ViewPager)findViewById(R.id.ticketInfoPager);
 
         pager.setAdapter(pageAdapter);
-        pager.setOffscreenPageLimit(0);
+        //pager.setOffscreenPageLimit(0);
 
         if(order.getTickets().size()>1){
             CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.indicator);

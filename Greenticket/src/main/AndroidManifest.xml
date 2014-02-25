@@ -6,11 +6,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
-    <meta-data
-        android:name="com.facebook.sdk.ApplicationId"
-        android:value="@string/app_id" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -33,10 +29,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.facebook.LoginActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="dk.greenticket.greenticket.LoggedinActivity"
             android:label="@string/title_activity_loggedin"
             android:screenOrientation="portrait" >
@@ -44,7 +36,20 @@
         <activity
             android:name="dk.greenticket.greenticket.ShowTicketsActivity"
             android:label="@string/title_activity_show_tickets"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.facebook.LoginActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/app_id" />
+
+        <activity
+            android:name="dk.greenticket.greenticket.WebActivity"
+            android:label="@string/title_activity_web" >
         </activity>
     </application>
 

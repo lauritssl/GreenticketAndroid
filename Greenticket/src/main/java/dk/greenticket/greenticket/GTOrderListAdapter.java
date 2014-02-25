@@ -45,7 +45,7 @@ public class GTOrderListAdapter extends ArrayAdapter<GTOrder> {
 
 
         if(row == null){
-            LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new OrderHolder();
