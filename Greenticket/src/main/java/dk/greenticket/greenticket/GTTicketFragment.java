@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import dk.greenticket.GTmodels.GTOrder;
 import dk.greenticket.GTmodels.GTTicket;
+import dk.greenticket.GTmodels.GTUser;
 
 /**
  * Created by lalan on 12/02/14.
@@ -45,8 +46,13 @@ public class GTTicketFragment extends Fragment {
 
         qrCodeView.setImageBitmap(qrPic);
 
-        TextView textInfoView = (TextView)v.findViewById(R.id.textView1);
+        TextView textInfoView = (TextView)v.findViewById(R.id.gtticket_info);
         textInfoView.setText("#"+orderID.toString()+" - "+type+"#"+ticketCount);
+
+        GTApplication application = (GTApplication) getActivity().getApplication();
+        GTUser user = application.getUser();
+        TextView textNameView = (TextView)v.findViewById(R.id.gtticket_name);
+        textNameView.setText(user.getFirstname()+" "+user.getLastname());
         return v;
     }
 

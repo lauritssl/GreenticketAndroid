@@ -32,6 +32,7 @@ import java.util.List;
  */
 public class GTConnect{
     private static final String SECRET = "MqHtRec35Zr6lAAOFZtb";
+    private static final String userAgent = "Greenticket Android";
     private static final String url = "https://greenticket.dk/api/";
     private String path;
 
@@ -54,6 +55,7 @@ public class GTConnect{
         try {
             HttpGet request = new HttpGet(urlPath);
             request.addHeader("Authorization", hash);
+            request.addHeader("User-Agent", userAgent);
             HttpResponse httpResponse = null;
             BasicResponseHandler responseHandler = new BasicResponseHandler();
             result = httpClient.execute(request, responseHandler);
@@ -106,6 +108,7 @@ public class GTConnect{
         try {
             HttpPost httpPost = new HttpPost(urlPath);
             httpPost.addHeader("Authorization", hash);
+            httpPost.addHeader("User-Agent", userAgent);
             httpPost.setEntity(new UrlEncodedFormEntity(para, HTTP.UTF_8));
             //HttpResponse httpResponse = null;
             BasicResponseHandler responseHandler = new BasicResponseHandler();

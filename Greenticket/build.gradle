@@ -27,4 +27,5 @@ dependencies {
     compile project(':libraries:facebook')
     compile files('lib/zxing.jar')
     compile files('lib/Shutterbug.jar')
+    compile files('lib/libGoogleAnalyticsServices.jar')
 }

@@ -6,6 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.MapBuilder;
+
 public class EventsFragment extends Fragment  {
 
     @Override
@@ -15,5 +19,13 @@ public class EventsFragment extends Fragment  {
         View V = inflater.inflate(R.layout.fragment_events, container, false);
 
         return V;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker tracker = EasyTracker.getInstance(getActivity());
+        tracker.set(Fields.SCREEN_NAME, "EventsList");
+        tracker.send(MapBuilder.createAppView().build());
     }
 }

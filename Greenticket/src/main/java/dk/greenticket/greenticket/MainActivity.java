@@ -21,6 +21,9 @@ import com.facebook.SessionLoginBehavior;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.MapBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,37 +50,33 @@ public class MainActivity extends Activity{
             Intent intent = new Intent(this, LoggedinActivity.class);
             startActivity(intent);
         }
+
+        GTDatabase db = new GTDatabase(getApplicationContext());
+        db.clear();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        GTDatabase db = new GTDatabase(this);
-        db.clear();
-
-    }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker tracker = EasyTracker.getInstance(this);
+        tracker.set(Fields.SCREEN_NAME, "Login");
+        tracker.send(MapBuilder.createAppView().build());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
     }
 
     public void GTLoginClick(View view){

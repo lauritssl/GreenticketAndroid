@@ -75,6 +75,7 @@ public class GTDatabase{
         values.put(GTDatabaseHelper.ORDERS_EMAIL, order.getEmail());
         values.put(GTDatabaseHelper.ORDERS_PAID, order.getPayed() ? 1 : 0);
         values.put(GTDatabaseHelper.ORDERS_BUYTIME, order.getBuyTime().toString());
+        Log.e("addORDER event id ", ""+order.getEvent().getId());
         values.put(GTDatabaseHelper.ORDERS_EVENTID, order.getEvent().getId());
 
         String[] args = {Integer.toString(order.getOrderID())};
@@ -111,18 +112,7 @@ public class GTDatabase{
 
         GTEvent event = null;
         while(c.moveToNext()){
-
-            Date date = null;
-            Date endDate = null;
-            try {
-                date = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy").parse(c.getString(c.getColumnIndex(GTDatabaseHelper.EVENTS_DATE)));
-                endDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy").parse(c.getString(c.getColumnIndex(GTDatabaseHelper.EVENTS_ENDDATE)));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-
-            event = new GTEvent(c.getString(c.getColumnIndex(GTDatabaseHelper.EVENTS_TITLE)), c.getString(c.getColumnIndex(GTDatabaseHelper.EVENTS_COVERLINK)), date, endDate, c.getInt(c.getColumnIndex(GTDatabaseHelper.EVENTS_ID)), c.getInt(c.getColumnIndex(GTDatabaseHelper.EVENTS_ACTIVE)) > 0 ? true :false, c.getString(c.getColumnIndex(GTDatabaseHelper.EVENTS_ORGANIZER)));
+            event = new GTEvent(c.getString(c.getColumnIndex(GTDatabaseHelper.EVENTS_TITLE)), c.getString(c.getColumnIndex(GTDatabaseHelper.EVENTS_COVERLINK)), c.getString(c.getColumnIndex(GTDatabaseHelper.EVENTS_DATE)), c.getString(c.getColumnIndex(GTDatabaseHelper.EVENTS_ENDDATE)), c.getInt(c.getColumnIndex(GTDatabaseHelper.EVENTS_ID)), c.getInt(c.getColumnIndex(GTDatabaseHelper.EVENTS_ACTIVE)) > 0 ? true :false, c.getString(c.getColumnIndex(GTDatabaseHelper.EVENTS_ORGANIZER)));
         }
         return event;
     }
@@ -135,17 +125,7 @@ public class GTDatabase{
 
         GTOrder order = null;
         while(c.moveToNext()){
-
-            Date buyTime = null;
-            try {
-                Log.e("SQL-ORDER", c.getString(c.getColumnIndex(GTDatabaseHelper.ORDERS_BUYTIME)));
-                buyTime = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy").parse(c.getString(c.getColumnIndex(GTDatabaseHelper.ORDERS_BUYTIME)));
-                Log.e("SQL-ORDER", buyTime.toString());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            Log.e("SQL-ORDER", buyTime.toString());
-            order = new GTOrder(c.getString(c.getColumnIndex(GTDatabaseHelper.ORDERS_EMAIL)), c.getInt(c.getColumnIndex(GTDatabaseHelper.ORDERS_ORDERID)), c.getInt(c.getColumnIndex(GTDatabaseHelper.ORDERS_PAID)) > 0 ? true :false, getEvent(c.getInt(c.getColumnIndex(GTDatabaseHelper.ORDERS_EVENTID))), buyTime);
+            order = new GTOrder(c.getString(c.getColumnIndex(GTDatabaseHelper.ORDERS_EMAIL)), c.getInt(c.getColumnIndex(GTDatabaseHelper.ORDERS_ORDERID)), c.getInt(c.getColumnIndex(GTDatabaseHelper.ORDERS_PAID)) > 0 ? true :false, getEvent(c.getInt(c.getColumnIndex(GTDatabaseHelper.ORDERS_EVENTID))), c.getString(c.getColumnIndex(GTDatabaseHelper.ORDERS_BUYTIME)));
             Log.e("SQL-ORDER", ""+order.getOrderID());
             ArrayList<GTTicket> tickets = getTickets(order.getOrderID());
 
@@ -183,7 +163,6 @@ public class GTDatabase{
 
         while(c.moveToNext()){
             GTOrder order = getOrder(c.getInt(c.getColumnIndex(GTDatabaseHelper.ORDERS_ORDERID)));
-            Log.e("SQL-ORDER", order.getEvent().getTitle());
             orders.add(order);
         }
 
@@ -201,7 +180,7 @@ public class GTDatabase{
 
     static class GTDatabaseHelper extends SQLiteOpenHelper {
 
-        private static final int DATABASE_VERSION = 3;
+        private static final int DATABASE_VERSION = 5;
         private static final String DATABASE_NAME = "GT";
 
         private static final String TABLE_NAME_ORDERS = "Orders";
@@ -234,7 +213,7 @@ public class GTDatabase{
         private static final String CREATE_TABLE_ORDERS = "CREATE TABLE "
                 + TABLE_NAME_ORDERS + " (" + ORDERS_ORDERID + " INTEGER PRIMARY KEY, " + ORDERS_EMAIL
                 + " VARCHAR(200), " + ORDERS_PAID + " INTEGER, " + ORDERS_BUYTIME
-                + " DATETIME, " + ORDERS_EVENTID +" INTEGER)";
+                + " VARCHAR(50), " + ORDERS_EVENTID +" INTEGER)";
 
         private static final String CREATE_TABLE_TICKETS = "CREATE TABLE "
                 + TABLE_NAME_TICKETS + " ("+ TICKETS_ID + " INTEGER PRIMARY KEY, "+TICKETS_QR+" VARCHAR(200), "+ TICKETS_CHECKED+ " INTEGER, "
@@ -243,8 +222,8 @@ public class GTDatabase{
 
         private static final String CREATE_TABLE_EVENTS = "CREATE TABLE "
                 + TABLE_NAME_EVENTS + " ("+ EVENTS_ID+" INTEGER PRIMARY KEY, " + EVENTS_TITLE+" VARCHAR(500), "
-                + EVENTS_ACTIVE + " INTEGER, " + EVENTS_COVERLINK + " VARCHAR(300), " + EVENTS_DATE + " DATETIME, "
-                + EVENTS_ENDDATE + " DATETIME," + EVENTS_ORGANIZER + " VARCHAR(300))";
+                + EVENTS_ACTIVE + " INTEGER, " + EVENTS_COVERLINK + " VARCHAR(300), " + EVENTS_DATE + " VARCHAR(50), "
+                + EVENTS_ENDDATE + " VARCHAR(50)," + EVENTS_ORGANIZER + " VARCHAR(300))";
 
         private Context context;
 

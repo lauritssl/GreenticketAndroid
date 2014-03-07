@@ -9,7 +9,7 @@
         android:id="@+id/ticketQR"/>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/gtticket_info"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ticketQR"
@@ -18,6 +18,17 @@
         android:textSize="15dp"
         android:textStyle="bold"
         android:gravity="center_horizontal"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="5dp"/>
+    <TextView
+        android:id="@+id/gtticket_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gtticket_info"
+        android:textColor="#000"
+        android:singleLine="true"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="5dp"/>
 
 </RelativeLayout>

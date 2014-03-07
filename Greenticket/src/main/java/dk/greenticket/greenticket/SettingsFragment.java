@@ -15,6 +15,9 @@ import android.widget.TextView;
 
 
 import com.facebook.Session;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.MapBuilder;
 
 import dk.greenticket.GTmodels.GTDatabase;
 import dk.greenticket.GTmodels.GTUser;
@@ -39,11 +42,11 @@ public class SettingsFragment extends Fragment  {
         settingsLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Log.e("shared", "LOG UD");
-                SharedPreferences app_preferences = this.getApplication().getSharedPreferences("User", Context.MODE_PRIVATE);
+                Log.e("shared", "LOG UD");
+                SharedPreferences app_preferences = getActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = app_preferences.edit();
                 editor.clear();
-                editor.commit();*/
+                editor.commit();
                 GTApplication application = (GTApplication) getActivity().getApplication();
                 if(!user.getFbID().isEmpty()){
                     Session.getActiveSession().close();
@@ -94,6 +97,14 @@ public class SettingsFragment extends Fragment  {
         });
 
         return V;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker tracker = EasyTracker.getInstance(getActivity());
+        tracker.set(Fields.SCREEN_NAME, "Settings");
+        tracker.send(MapBuilder.createAppView().build());
     }
 
 }

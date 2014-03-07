@@ -9,9 +9,19 @@ import java.util.Date;
  */
 public class GTEvent {
     private String title, coverLink, organizer;
-    private Date date, endDate;
+    private String date, endDate;
     private Integer id;
     private Boolean active;
+
+    public GTEvent(String title, String coverLink, String date, String endDate, Integer id, Boolean active, String orgName){
+        this.title = title;
+        this.coverLink = coverLink;
+        this.date = date;
+        this.endDate = endDate;
+        this.id = id;
+        this.active = active;
+        this.organizer = orgName;
+    }
 
     public String getTitle() {
         return title;
@@ -29,19 +39,19 @@ public class GTEvent {
         this.coverLink = coverLink;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
@@ -69,13 +79,4 @@ public class GTEvent {
         this.active = active;
     }
 
-    public GTEvent(String title, String coverLink, Date date, Date endDate, Integer id, Boolean active, String orgName){
-        this.title = title;
-        this.coverLink = coverLink;
-        this.date = date;
-        this.endDate = endDate;
-        this.id = id;
-        this.active = active;
-        this.organizer = orgName;
-    }
 }

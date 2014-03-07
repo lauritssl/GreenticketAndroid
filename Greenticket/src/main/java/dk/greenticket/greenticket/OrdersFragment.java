@@ -12,7 +12,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.MapBuilder;
+
 import java.util.ArrayList;
+import java.util.Collections;
 
 import dk.greenticket.GTmodels.GTOrder;
 import dk.greenticket.GTmodels.GTUser;
@@ -29,6 +34,7 @@ public class OrdersFragment extends ListFragment  {
 
         GTApplication application = (GTApplication) getActivity().getApplication();
         final GTUser user = application.getUser();
+        Log.e("user email", user.getEmail());
         new Thread(new Runnable(){
             public void run(){
                 user.loadOrders();
@@ -53,6 +59,14 @@ public class OrdersFragment extends ListFragment  {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker tracker = EasyTracker.getInstance(getActivity());
+        tracker.set(Fields.SCREEN_NAME, "OrdersList");
+        tracker.send(MapBuilder.createAppView().build());
+    }
+
+    @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         position --;
         GTOrder gtOrder = (GTOrder) getListAdapter().getItem(position);
@@ -67,6 +81,7 @@ public class OrdersFragment extends ListFragment  {
             @Override
             public void run() {
                 orders = user.getOrders();
+                Collections.reverse(orders);
                 GTOrderListAdapter adapter = new GTOrderListAdapter(getActivity(), R.layout.list_order_row, orders);
                 setListAdapter(adapter);
             }

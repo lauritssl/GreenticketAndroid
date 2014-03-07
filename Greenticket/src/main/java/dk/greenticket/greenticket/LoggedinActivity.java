@@ -7,6 +7,10 @@ import android.support.v4.app.FragmentTabHost;
 import android.widget.TabWidget;
 import android.widget.Toast;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.MapBuilder;
+
 public class LoggedinActivity extends FragmentActivity {
     // Fragment TabHost as mTabHost
     private FragmentTabHost mTabHost;
@@ -36,5 +40,11 @@ public class LoggedinActivity extends FragmentActivity {
     public void onBackPressed() {
     }
 
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
+    }
 
 }

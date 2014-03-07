@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.applidium.shutterbug.FetchableImageView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -61,8 +62,13 @@ public class GTOrderListAdapter extends ArrayAdapter<GTOrder> {
         GTOrder order = orders.get(position);
         holder.orderID.setText("#"+order.getOrderID().toString());
         holder.orderEventTitle.setText(order.getEvent().getTitle());
-        Date dateString = order.getEvent().getDate();
-        holder.orderEventDate.setText(new SimpleDateFormat("dd. MMM yyyy HH:mm").format(dateString));
+        Date eventDate = null;
+        try {
+            eventDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(order.getEvent().getDate());
+        } catch (ParseException e) {
+            Log.e("GTOrderListAdapter *eventDate parser*", e.toString());
+        }
+        holder.orderEventDate.setText(new SimpleDateFormat("dd. MMM yyyy HH:mm").format(eventDate));
         holder.orderEventOrg.setText(order.getEvent().getOrganizer());
 
         RotateAnimation anim = new RotateAnimation(0f, 90f, 364f, 364f);

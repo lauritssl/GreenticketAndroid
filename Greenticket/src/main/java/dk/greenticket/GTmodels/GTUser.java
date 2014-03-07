@@ -22,11 +22,11 @@ import dk.greenticket.greenticket.GTApplication;
  * Created by lalan on 28/01/14.
  */
 public class GTUser{
-    private String firstname, lastname, email, fbID, imagePath;
+    private String firstname, lastname, email, fbID = "", imagePath;
     private String password;
     private boolean loggedIn;
-    private ArrayList<GTEvent> events;
-    private ArrayList<GTOrder> orders;
+    private ArrayList<GTEvent> events = new ArrayList<GTEvent>();
+    private ArrayList<GTOrder> orders = new ArrayList<GTOrder>();
     private Context context;
 
 
@@ -34,8 +34,6 @@ public class GTUser{
        this.email = email;
        this.fbID = new Integer(facebookID).toString();
        this.loggedIn = false;
-       this.events = new ArrayList<GTEvent>();
-       this.orders = new ArrayList<GTOrder>();
        this.context = context;
 
 
@@ -46,8 +44,6 @@ public class GTUser{
         this.loggedIn = true;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.events = new ArrayList<GTEvent>();
-        this.orders = new ArrayList<GTOrder>();
         this.context = context;
 
 
@@ -57,9 +53,6 @@ public class GTUser{
        this.email = email;
        this.password = password;
        this.loggedIn = false;
-       this.events = new ArrayList<GTEvent>();
-       this.orders = new ArrayList<GTOrder>();
-       this.fbID = "";
        this.context = context;
 
    }
@@ -99,7 +92,6 @@ public class GTUser{
                e.printStackTrace();
            }
        }
-       Log.e("login" + firstname + lastname, ""+isLoggedIn());
        return isLoggedIn();
    }
 
@@ -151,7 +143,7 @@ public class GTUser{
                         Integer orderID = order.getInt("id");
                         String payedString = order.getString("payed");
                         Boolean payed = payedString.equalsIgnoreCase("1");
-                        Date buyTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(order.getString("buyTime"));
+                        String buyTime = order.getString("buyTime");
 
                         JSONObject event = order.getJSONObject("event");
                         GTEvent gtevent;
@@ -169,19 +161,18 @@ public class GTUser{
                                 orgName = event.getJSONObject("organisation").getString("name");
 
                             }
-                            Log.e("TITLE + ORG", title+" - "+orgName);
-
-                            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(event.getString("eventStart"));
-                            Date endDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(event.getString("eventEnd"));
+                            Log.e("***TITLE + ORG", title+" - "+orgName);
+                            String date = event.getString("eventStart");
+                            String endDate = event.getString("eventEnd");
                             Integer id = event.getInt("id");
                             String activeString = event.getString("active");
                             Boolean active = activeString.equalsIgnoreCase("1");
 
 
                             gtevent = new GTEvent(title,coverLink,date,endDate,id,active, orgName);
-                            Log.e("GTUser event", ""+db.addEvent(gtevent));
+                            db.addEvent(gtevent);
                             GTOrder gtOrder = new GTOrder(email, orderID, payed, gtevent, buyTime);
-                            Log.e("GTUser order", ""+db.addOrder(gtOrder));
+                            db.addOrder(gtOrder);
                             //orders.add(gtOrder);
 
                             JSONArray ordersTickets = order.getJSONArray("tickets");
@@ -206,8 +197,6 @@ public class GTUser{
                     }
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (ParseException e) {
                 e.printStackTrace();
             }catch (Exception e) {
                 e.printStackTrace();
@@ -238,8 +227,8 @@ public class GTUser{
                         orgName = event.getJSONObject("organisation").getString("name");
                     }
 
-                    Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(event.getString("eventStart"));
-                    Date endDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(event.getString("eventEnd"));
+                    String date = event.getString("eventStart");
+                    String endDate = event.getString("eventEnd");
                     Integer id = event.getInt("id");
                     String activeString = event.getString("active");
                     Boolean active = activeString.equalsIgnoreCase("1");
@@ -251,8 +240,6 @@ public class GTUser{
                 return true;
             }
         } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
             e.printStackTrace();
         }
         return false;

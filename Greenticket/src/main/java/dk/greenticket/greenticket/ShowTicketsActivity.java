@@ -21,6 +21,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.applidium.shutterbug.FetchableImageView;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.MapBuilder;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -68,6 +71,20 @@ public class ShowTicketsActivity extends FragmentActivity {
         }
 
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker tracker = EasyTracker.getInstance(this);
+        tracker.set(Fields.SCREEN_NAME, "ShowTicket");
+        tracker.send(MapBuilder.createAppView().build());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
     }
 
     private List<Fragment> getFragments(ArrayList<GTTicket> tickets){

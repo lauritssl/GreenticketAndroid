@@ -13,10 +13,10 @@ public class GTOrder{
     private Integer orderID;
     private Boolean payed;
     private GTEvent event;
-    private Date buyTime;
+    private String buyTime;
     private ArrayList<GTTicket> tickets;
 
-    public GTOrder(String email, Integer orderID, Boolean payed, GTEvent event, Date buyTime){
+    public GTOrder(String email, Integer orderID, Boolean payed, GTEvent event, String buyTime){
         tickets = new ArrayList<GTTicket>();
         this.email = email;
         this.orderID = orderID;
@@ -45,7 +45,7 @@ public class GTOrder{
         return event;
     }
 
-    public Date getBuyTime() {
+    public String getBuyTime() {
         return buyTime;
     }
 
