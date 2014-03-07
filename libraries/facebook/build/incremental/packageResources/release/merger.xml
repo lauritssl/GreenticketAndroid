@@ -794,6 +794,7 @@ center
             </file>
         </source>
         <source path="/Users/lalan/Developer/GreenticketAndroid/libraries/facebook/build/res/rs/release" />
+        <source path="/Users/lalan/Developer/GreenticketAndroid/libraries/facebook/build/res/generated/release" />
     </dataSet>
     <dataSet config="release" >
         <source path="/Users/lalan/Developer/GreenticketAndroid/libraries/facebook/src/release/res" />
