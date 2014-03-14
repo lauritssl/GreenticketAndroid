@@ -127,9 +127,10 @@ public class GTUser{
 
     public boolean loadOrders(){
         GTApplication application = (GTApplication) context.getApplicationContext();
-        orders.clear();
+
         GTDatabase db = new GTDatabase(context);
         if(application.isNetworkAvailable()){
+            db.clear();
             GTConnect con = new GTConnect("users/"+email+"/orders");
             JSONObject result = con.GET();
             try {
@@ -201,7 +202,7 @@ public class GTUser{
                 e.printStackTrace();
             }
         }
-
+        orders.clear();
         orders = db.getOrders();
         return true;
     }

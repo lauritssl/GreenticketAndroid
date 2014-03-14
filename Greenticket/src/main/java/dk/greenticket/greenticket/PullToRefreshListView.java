@@ -224,6 +224,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
         mRefreshViewImage.setImageResource(R.drawable.ic_pulltorefresh_arrow);
         // Clear the full rotation animation
         mRefreshViewImage.clearAnimation();
+        mRefreshViewImage.setVisibility(View.GONE);
         // Hide progress bar and arrow.
         mRefreshViewProgress.setVisibility(View.GONE);
     }
@@ -252,6 +253,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
         if (mCurrentScrollState == SCROLL_STATE_TOUCH_SCROLL && mRefreshState != REFRESHING) {
             if (firstVisibleItem == 0) {
                 if (mRefreshState == PULL_TO_REFRESH && mRefreshView.getBottom() >= mRefreshViewHeight) {
+                    mRefreshViewImage.setVisibility(View.VISIBLE);
                     mRefreshViewText.setText(R.string.pull_to_refresh_release_label);
                     mRefreshViewText.setVisibility(View.VISIBLE);
                     mRefreshViewImage.clearAnimation();

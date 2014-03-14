@@ -82,6 +82,27 @@ public class GTDatabase{
         }
     }
 
+    public long addAdminEvent(GTEvent event) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(GTDatabaseHelper.ADMINEVENTS_ID, event.getId());
+        values.put(GTDatabaseHelper.ADMINEVENTS_TITLE, event.getTitle());
+        values.put(GTDatabaseHelper.ADMINEVENTS_ACTIVE, event.getActive() ? 1 : 0);
+        values.put(GTDatabaseHelper.ADMINEVENTS_COVERLINK, event.getCoverLink());
+        values.put(GTDatabaseHelper.ADMINEVENTS_DATE, event.getDate().toString());
+        values.put(GTDatabaseHelper.ADMINEVENTS_ENDDATE, event.getEndDate().toString());
+        values.put(GTDatabaseHelper.ADMINEVENTS_ORGANIZER, event.getOrganizer());
+
+        String[] args = {Integer.toString(event.getId())};
+        Cursor c = db.query(GTDatabaseHelper.TABLE_NAME_ADMINEVENTS, null,GTDatabaseHelper.ADMINEVENTS_ID+" = ?", args,null,null,null);
+
+        if(c.getCount() <= 0){
+            return db.insert(GTDatabaseHelper.TABLE_NAME_ADMINEVENTS, null, values);
+        }else{
+            return db.update(GTDatabaseHelper.TABLE_NAME_ADMINEVENTS, values,GTDatabaseHelper.ADMINEVENTS_ID+" = ?", args);
+        }
+    }
+
     public GTTicket getTicket(String qrID){
         SQLiteDatabase db = helper.getWritableDatabase();
 
@@ -129,6 +150,19 @@ public class GTDatabase{
 
     }
 
+    public GTEvent getAdminEvent(int eventID){
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        String[] args = {Integer.toString(eventID)};
+        Cursor c = db.query(GTDatabaseHelper.TABLE_NAME_ADMINEVENTS, null,GTDatabaseHelper.ADMINEVENTS_ID + " = ?", args, null, null, null);
+
+        GTEvent event = null;
+        while(c.moveToNext()){
+            event = new GTEvent(c.getString(c.getColumnIndex(GTDatabaseHelper.ADMINEVENTS_TITLE)), c.getString(c.getColumnIndex(GTDatabaseHelper.ADMINEVENTS_COVERLINK)), c.getString(c.getColumnIndex(GTDatabaseHelper.ADMINEVENTS_DATE)), c.getString(c.getColumnIndex(GTDatabaseHelper.ADMINEVENTS_ENDDATE)), c.getInt(c.getColumnIndex(GTDatabaseHelper.ADMINEVENTS_ID)), c.getInt(c.getColumnIndex(GTDatabaseHelper.ADMINEVENTS_ACTIVE)) > 0 ? true :false, c.getString(c.getColumnIndex(GTDatabaseHelper.ADMINEVENTS_ORGANIZER)));
+        }
+        return event;
+    }
+
     public ArrayList<GTTicket> getTickets(int orderid){
         ArrayList<GTTicket> tickets = new ArrayList<GTTicket>();
         SQLiteDatabase db = helper.getWritableDatabase();
@@ -160,12 +194,27 @@ public class GTDatabase{
         return orders;
     }
 
+    public ArrayList<GTEvent> getAdminEvents(){
+        ArrayList<GTEvent> adminEvents = new ArrayList<GTEvent>();
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        Cursor c = db.query(GTDatabaseHelper.TABLE_NAME_ADMINEVENTS, null, null, null, null, null,null);
+
+        while(c.moveToNext()){
+            GTEvent event = getAdminEvent(c.getInt(c.getColumnIndex(GTDatabaseHelper.ADMINEVENTS_ID)));
+            adminEvents.add(event);
+        }
+
+        return adminEvents;
+    }
+
     public void clear(){
         SQLiteDatabase db = helper.getWritableDatabase();
 
         db.delete(GTDatabaseHelper.TABLE_NAME_TICKETS, null, null);
         db.delete(GTDatabaseHelper.TABLE_NAME_EVENTS, null, null);
         db.delete(GTDatabaseHelper.TABLE_NAME_ORDERS, null, null);
+        db.delete(GTDatabaseHelper.TABLE_NAME_ADMINEVENTS, null, null);
         Log.i("SQL", "table clear");
     }
 
@@ -200,6 +249,14 @@ public class GTDatabase{
         private static final String EVENTS_ENDDATE = "endDate";
         private static final String EVENTS_ORGANIZER = "organizer";
 
+        private static final String ADMINEVENTS_ID = "id";
+        private static final String ADMINEVENTS_TITLE = "title";
+        private static final String ADMINEVENTS_ACTIVE = "active";
+        private static final String ADMINEVENTS_COVERLINK = "coverLink";
+        private static final String ADMINEVENTS_DATE = "date";
+        private static final String ADMINEVENTS_ENDDATE = "endDate";
+        private static final String ADMINEVENTS_ORGANIZER = "organizer";
+
 
         private static final String CREATE_TABLE_ORDERS = "CREATE TABLE "
                 + TABLE_NAME_ORDERS + " (" + ORDERS_ORDERID + " INTEGER PRIMARY KEY, " + ORDERS_EMAIL
@@ -216,6 +273,11 @@ public class GTDatabase{
                 + EVENTS_ACTIVE + " INTEGER, " + EVENTS_COVERLINK + " VARCHAR(300), " + EVENTS_DATE + " VARCHAR(50), "
                 + EVENTS_ENDDATE + " VARCHAR(50)," + EVENTS_ORGANIZER + " VARCHAR(300))";
 
+        private static final String CREATE_TABLE_ADMINEVENTS = "CREATE TABLE "
+                + TABLE_NAME_ADMINEVENTS + " ("+ ADMINEVENTS_ID+" INTEGER PRIMARY KEY, " + ADMINEVENTS_TITLE+" VARCHAR(500), "
+                + ADMINEVENTS_ACTIVE + " INTEGER, " + ADMINEVENTS_COVERLINK + " VARCHAR(300), " + ADMINEVENTS_DATE + " VARCHAR(50), "
+                + ADMINEVENTS_ENDDATE + " VARCHAR(50)," + ADMINEVENTS_ORGANIZER + " VARCHAR(300))";
+
         private Context context;
 
         public GTDatabaseHelper(Context context){
@@ -231,6 +293,7 @@ public class GTDatabase{
             db.execSQL(CREATE_TABLE_EVENTS);
             db.execSQL(CREATE_TABLE_ORDERS);
             db.execSQL(CREATE_TABLE_TICKETS);
+            db.execSQL(CREATE_TABLE_ADMINEVENTS);
         }
 
         @Override
@@ -239,6 +302,7 @@ public class GTDatabase{
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_ORDERS);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_TICKETS);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_EVENTS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_ADMINEVENTS);
 
             // create new tables
             onCreate(db);
