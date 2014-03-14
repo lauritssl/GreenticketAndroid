@@ -34,7 +34,6 @@ public class OrdersFragment extends ListFragment  {
 
         GTApplication application = (GTApplication) getActivity().getApplication();
         final GTUser user = application.getUser();
-        Log.e("user email", user.getEmail());
         new Thread(new Runnable(){
             public void run(){
                 user.loadOrders();

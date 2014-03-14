@@ -94,7 +94,7 @@
            android:layout_height="40dp"
            android:layout_marginLeft="80dp"
            android:layout_marginTop="5dp"
-           android:text="Log ud"
+           android:text="@string/settings_signout"
            android:textColor="#474747"
            android:textAllCaps="true"
            android:textSize="15dp"

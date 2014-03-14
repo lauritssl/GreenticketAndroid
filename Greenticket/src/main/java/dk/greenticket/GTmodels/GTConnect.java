@@ -66,24 +66,6 @@ public class GTConnect{
             Log.e("GTConnect:connection", e.toString());
         }
 
-        /*try {
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    is, "UTF-8"), 8);
-            StringBuilder sb = new StringBuilder();
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-            is.close();
-            result = sb.toString();
-            Log.e("GTConnect:RESULT", result);
-        } catch (Exception e) {
-            Log.e("GTConnect:Buffer Error", "Error converting result " + e.toString());
-        }*/
-
-        Log.e("GTConnect:result", result);
-
         try {
             json = new JSONObject(result);
         } catch (JSONException e) {
@@ -110,32 +92,13 @@ public class GTConnect{
             httpPost.addHeader("Authorization", hash);
             httpPost.addHeader("User-Agent", userAgent);
             httpPost.setEntity(new UrlEncodedFormEntity(para, HTTP.UTF_8));
-            //HttpResponse httpResponse = null;
+
             BasicResponseHandler responseHandler = new BasicResponseHandler();
             result = httpClient.execute(httpPost, responseHandler);
-            /*HttpEntity httpEntity = httpResponse.getEntity();
-            is = httpEntity.getContent();*/
+
         } catch (Exception e) {
             Log.e("GTConnect:connection", e.toString());
         }
-
-        Log.e("GTConnect:result", result);
-
-        /*try {
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    is, "UTF-8"), 8);
-            StringBuilder sb = new StringBuilder();
-
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-            is.close();
-            result = sb.toString();
-        } catch (Exception e) {
-            Log.e("GTConnect:Buffer Error", "Error converting result " + e.toString());
-        }*/
 
         try {
             json = new JSONObject(result);

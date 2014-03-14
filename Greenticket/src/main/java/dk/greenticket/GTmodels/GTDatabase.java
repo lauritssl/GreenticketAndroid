@@ -24,7 +24,6 @@ public class GTDatabase{
 
 
     public long addTicket(GTTicket ticket) {
-        Log.e("SQL", "ticket");
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(GTDatabaseHelper.TICKETS_QR, ticket.getQRID());
@@ -37,10 +36,8 @@ public class GTDatabase{
         Cursor c = db.query(GTDatabaseHelper.TABLE_NAME_TICKETS, null,GTDatabaseHelper.TICKETS_QR+" = ?", args,null,null,null);
 
         if(c.getCount() <= 0){
-            Log.e("SQL", "add ticket");
             return db.insert(GTDatabaseHelper.TABLE_NAME_TICKETS, null, values);
         }else{
-            Log.e("SQL", "update ticket");
             return db.update(GTDatabaseHelper.TABLE_NAME_TICKETS, values,GTDatabaseHelper.TICKETS_QR+" = ?", args);
         }
     }
@@ -60,10 +57,8 @@ public class GTDatabase{
         Cursor c = db.query(GTDatabaseHelper.TABLE_NAME_EVENTS, null,GTDatabaseHelper.EVENTS_ID+" = ?", args,null,null,null);
 
         if(c.getCount() <= 0){
-            Log.e("SQL", "add event");
             return db.insert(GTDatabaseHelper.TABLE_NAME_EVENTS, null, values);
         }else{
-            Log.e("SQL", "update evnet");
             return db.update(GTDatabaseHelper.TABLE_NAME_EVENTS, values,GTDatabaseHelper.EVENTS_ID+" = ?", args);
         }
     }
@@ -75,17 +70,14 @@ public class GTDatabase{
         values.put(GTDatabaseHelper.ORDERS_EMAIL, order.getEmail());
         values.put(GTDatabaseHelper.ORDERS_PAID, order.getPayed() ? 1 : 0);
         values.put(GTDatabaseHelper.ORDERS_BUYTIME, order.getBuyTime().toString());
-        Log.e("addORDER event id ", ""+order.getEvent().getId());
         values.put(GTDatabaseHelper.ORDERS_EVENTID, order.getEvent().getId());
 
         String[] args = {Integer.toString(order.getOrderID())};
         Cursor c = db.query(GTDatabaseHelper.TABLE_NAME_ORDERS, null,GTDatabaseHelper.ORDERS_ORDERID+" = ?", args,null,null,null);
 
         if(c.getCount() <= 0){
-            Log.e("SQL", "add order");
             return db.insert(GTDatabaseHelper.TABLE_NAME_ORDERS, null, values);
         }else{
-            Log.e("SQL", "update order");
             return db.update(GTDatabaseHelper.TABLE_NAME_ORDERS, values, GTDatabaseHelper.ORDERS_ORDERID + " = ?", args);
         }
     }
@@ -126,7 +118,6 @@ public class GTDatabase{
         GTOrder order = null;
         while(c.moveToNext()){
             order = new GTOrder(c.getString(c.getColumnIndex(GTDatabaseHelper.ORDERS_EMAIL)), c.getInt(c.getColumnIndex(GTDatabaseHelper.ORDERS_ORDERID)), c.getInt(c.getColumnIndex(GTDatabaseHelper.ORDERS_PAID)) > 0 ? true :false, getEvent(c.getInt(c.getColumnIndex(GTDatabaseHelper.ORDERS_EVENTID))), c.getString(c.getColumnIndex(GTDatabaseHelper.ORDERS_BUYTIME)));
-            Log.e("SQL-ORDER", ""+order.getOrderID());
             ArrayList<GTTicket> tickets = getTickets(order.getOrderID());
 
             for(int i = 0; i < tickets.size(); i++){
@@ -175,7 +166,7 @@ public class GTDatabase{
         db.delete(GTDatabaseHelper.TABLE_NAME_TICKETS, null, null);
         db.delete(GTDatabaseHelper.TABLE_NAME_EVENTS, null, null);
         db.delete(GTDatabaseHelper.TABLE_NAME_ORDERS, null, null);
-        Log.e("SQL", "table clear");
+        Log.i("SQL", "table clear");
     }
 
     static class GTDatabaseHelper extends SQLiteOpenHelper {
@@ -236,16 +227,10 @@ public class GTDatabase{
         @Override
         public void onCreate(SQLiteDatabase db) {
             // creating required tables
-            Log.e("SQL", "create begin");
-            Log.e("SQL", CREATE_TABLE_EVENTS);
+            Log.i("SQL", "create begin");
             db.execSQL(CREATE_TABLE_EVENTS);
-            Log.e("SQL", "events");
-            Log.e("SQL", CREATE_TABLE_ORDERS);
             db.execSQL(CREATE_TABLE_ORDERS);
-            Log.e("SQL", "orders");
-            Log.e("SQL", CREATE_TABLE_TICKETS);
             db.execSQL(CREATE_TABLE_TICKETS);
-            Log.e("SQL", "tickets");
         }
 
         @Override

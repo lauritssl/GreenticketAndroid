@@ -13,12 +13,20 @@
     <string name="title_activity_web">WebActivity</string>
     <string name="settings_account">account</string>
     <string name="settings_settings">settings</string>
-    <string name="terms_of_service">Handelsbetingelser</string>
-    <string name="terms_of_event">Eventbetingelser</string>
-    <string name="privacy_policy">Privatpolitik</string>
-    <string name="login_fail">Der skete en fejl. prøv igen..</string>
-    <string name="no_network">Intet netværk!</string>
+    <string name="settings_signout">Sign out</string>
+    <string name="terms_of_service">Terms of service</string>
+    <string name="terms_of_event">Terms of events</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="login_fail">An error occurred, try again..</string>
+    <string name="no_network">No connection!</string>
+    <string name="tab_events_title">Events</string>
+    <string name="tab_orders_title">Tickets</string>
+    <string name="tab_settings_title">Settings</string>
 
+    <string name="main_login_with_fb">Login with Facebook</string>
+    <string name="main_login_with_gt">Login with Greenticket</string>
+    <string name="main_login">Login</string>
+    <string name="main_login_back_to_loginscreen">Back to login screen</string>
 
     <string name="pull_to_refresh_pull_label">Pull to refresh...</string>
     <string name="pull_to_refresh_release_label">Release to refresh...</string>

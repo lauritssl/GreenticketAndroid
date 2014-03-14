@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="settings_account">bruger</string>
+    <string name="settings_settings">indstillinger</string>
+    <string name="settings_signout">Log ud</string>
+    <string name="terms_of_service">Handelsbetingelser</string>
+    <string name="terms_of_event">Eventbetingelser</string>
+    <string name="privacy_policy">Privatpolitik</string>
+    <string name="login_fail">Der skete en fejl. prøv igen..</string>
+    <string name="no_network">Intet netværk!</string>
+    <string name="tab_events_title">Events</string>
+    <string name="tab_orders_title">Billetter</string>
+    <string name="tab_settings_title">Indstillinger</string>
+
+    <string name="main_login_with_fb">Log ind med Facebook</string>
+    <string name="main_login_with_gt">Log ind med Greenticket</string>
+    <string name="main_login">Log ind</string>
+    <string name="main_login_back_to_loginscreen">Tilbage til login skræm</string>
+
+
+    <string name="pull_to_refresh_pull_label">Træk ned for at opdatere...</string>
+    <string name="pull_to_refresh_release_label">Slip for at opdatere...</string>
+    <string name="pull_to_refresh_refreshing_label">Opdatere...</string>
+    <string name="pull_to_refresh_tap_label">Tryk for at opdatere...</string>
+
+
+
+</resources>

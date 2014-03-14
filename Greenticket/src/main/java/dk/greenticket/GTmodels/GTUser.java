@@ -161,7 +161,6 @@ public class GTUser{
                                 orgName = event.getJSONObject("organisation").getString("name");
 
                             }
-                            Log.e("***TITLE + ORG", title+" - "+orgName);
                             String date = event.getString("eventStart");
                             String endDate = event.getString("eventEnd");
                             Integer id = event.getInt("id");

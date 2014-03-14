@@ -2,16 +2,20 @@ package dk.greenticket.greenticket;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.applidium.shutterbug.FetchableImageView;
@@ -55,6 +59,7 @@ public class GTOrderListAdapter extends ArrayAdapter<GTOrder> {
             holder.orderEventOrg = (TextView) row.findViewById(R.id.orderEventOrg);
             holder.orderEventTitle = (TextView) row.findViewById(R.id.orderEventTitle);
             holder.orderCover = (FetchableImageView) row.findViewById(R.id.orderCover);
+            holder.order = (RelativeLayout) row.findViewById(R.id.order);
         }else{
             holder = (OrderHolder) row.getTag();
         }
@@ -71,15 +76,24 @@ public class GTOrderListAdapter extends ArrayAdapter<GTOrder> {
         holder.orderEventDate.setText(new SimpleDateFormat("dd. MMM yyyy HH:mm").format(eventDate));
         holder.orderEventOrg.setText(order.getEvent().getOrganizer());
 
-        RotateAnimation anim = new RotateAnimation(0f, 90f, 364f, 364f);
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Point size = new Point();
+        wm.getDefaultDisplay().getSize(size);
+        float width = size.x;
+        final float scale = getContext().getResources().getDisplayMetrics().density;
+        int margin = (int) (10 * scale + 0.5f);
+        width = (width/2) - margin;
+
+        RotateAnimation anim = new RotateAnimation(0f, 90f, width, width);
         anim.setInterpolator(new LinearInterpolator());
         anim.setRepeatCount(Animation.INFINITE);
         anim.setDuration(0);
 
         holder.orderCover.startAnimation(anim);
 
-        holder.orderCover.setImage(order.getEvent().getCoverLink(), R.drawable.defaultcover);
 
+
+        holder.orderCover.setImage(order.getEvent().getCoverLink(), R.drawable.defaultcover);
         return row;
     }
 
@@ -87,6 +101,7 @@ public class GTOrderListAdapter extends ArrayAdapter<GTOrder> {
         TextView orderID;
         TextView orderEventTitle , orderEventDate, orderEventOrg;
         FetchableImageView orderCover;
+        RelativeLayout order;
     }
 
 

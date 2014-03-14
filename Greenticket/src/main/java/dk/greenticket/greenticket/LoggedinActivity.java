@@ -22,11 +22,11 @@ public class LoggedinActivity extends FragmentActivity {
 
         mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-        mTabHost.addTab(mTabHost.newTabSpec("Tickets").setIndicator("Tickets"),
+        mTabHost.addTab(mTabHost.newTabSpec(getResources().getString(R.string.tab_orders_title)).setIndicator(getResources().getString(R.string.tab_orders_title)),
                 OrdersFragment.class, null);
-        //mTabHost.addTab(mTabHost.newTabSpec("Events").setIndicator("Events"),
+        //mTabHost.addTab(mTabHost.newTabSpec(getResources().getString(R.string.tab_events_title)).setIndicator(getResources().getString(R.string.tab_events_title)),
         //        EventsFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("Settings").setIndicator("Settings"),
+        mTabHost.addTab(mTabHost.newTabSpec(getResources().getString(R.string.tab_settings_title)).setIndicator(getResources().getString(R.string.tab_settings_title)),
                 SettingsFragment.class, null);
 
         TabWidget tabWidget = mTabHost.getTabWidget();

@@ -134,7 +134,7 @@ public class MainActivity extends Activity{
                            @Override
                            public void onCompleted(GraphUser graphUser, Response response) {
                                if (graphUser != null) {
-
+                                    Log.e("graphUser", graphUser.toString());
                                    final GTUser user = new GTUser(new Integer(graphUser.asMap().get("id").toString()), graphUser.asMap().get("email").toString(), getApplicationContext());
                                    new Thread(new Runnable(){
                                        public void run(){
