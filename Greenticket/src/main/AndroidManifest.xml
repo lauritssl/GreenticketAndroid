@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dk.greenticket.greenticket"
-    android:versionCode="2"
+    android:versionCode="4"
     android:versionName="1.0" >
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.FLASHLIGHT"/>
 
-    <compatible-screens>
+    <!--<compatible-screens>
 
         <screen android:screenSize="small" android:screenDensity="ldpi" />
         <screen android:screenSize="small" android:screenDensity="mdpi" />
@@ -22,12 +22,9 @@
         <screen android:screenSize="normal" android:screenDensity="mdpi" />
         <screen android:screenSize="normal" android:screenDensity="hdpi" />
         <screen android:screenSize="normal" android:screenDensity="xhdpi" />
-    </compatible-screens>
 
-
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="14" />
+        <screen android:screenDensity="480" android:screenSize="normal"/>
+    </compatible-screens>-->
 
     <application
         android:name="dk.greenticket.greenticket.GTApplication"
