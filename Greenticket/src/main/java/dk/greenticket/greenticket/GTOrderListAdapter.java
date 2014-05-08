@@ -60,8 +60,6 @@ public class GTOrderListAdapter extends ArrayAdapter<GTOrder> {
             holder.orderEventTitle = (TextView) row.findViewById(R.id.orderEventTitle);
             holder.orderCover = (FetchableImageView) row.findViewById(R.id.orderCover);
             holder.order = (RelativeLayout) row.findViewById(R.id.order);
-        }else{
-            holder = (OrderHolder) row.getTag();
         }
 
         GTOrder order = orders.get(position);

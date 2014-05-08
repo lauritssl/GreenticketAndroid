@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.FLASHLIGHT"/>
 
+    <uses-feature android:name="android.hardware.camera" />
+
     <compatible-screens>
 
         <screen android:screenSize="small" android:screenDensity="ldpi" />
@@ -34,8 +36,8 @@
         android:allowBackup="true"
         android:icon="@drawable/appicon"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:debuggable="false">
+        android:theme="@style/AppTheme">
+        //android:debuggable="false"
         <activity
             android:name="dk.greenticket.greenticket.MainActivity"
             android:label="@string/app_name"
@@ -60,15 +62,20 @@
             android:name="com.facebook.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="dk.greenticket.greenticket.WebActivity"
+            android:label="@string/title_activity_web"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="dk.greenticket.ZbarScanner.ZBarScannerActivity"
+            android:label="@string/title_activity_zbarscanner">
+        </activity>
+
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/app_id" />
-
-        <activity
-            android:name="dk.greenticket.greenticket.WebActivity"
-            android:label="@string/title_activity_web" >
-        </activity>
+            android:value="@string/app_id"/>
     </application>
 
 </manifest>

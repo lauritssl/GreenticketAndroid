@@ -28,4 +28,25 @@ dependencies {
     compile files('lib/zxing.jar')
     compile files('lib/Shutterbug.jar')
     compile files('lib/libGoogleAnalyticsServices.jar')
+    compile files('lib/zbar.jar')
+    compile files('lib/extraLib.jar')
+}
+
+task packageNativeLibs(type: Jar) {
+    baseName 'armebia'  // adjust to what you want your lib to be called
+
+    // libs is where normally a jni project puts objects so let's look there....
+    from(file('lib/armeabi/')) {
+        include '**/*.so'
+    }
+    from(file('lib/armeabi-v7a/')) {
+        include '**/*.so'
+    }
+    from(file('lib/x86/')) {
+        include '**/*.so'
+    }
+
+    into('lib/') // pay attention if using a different ABI like x86
+
+    destinationDir(file('lib/'))
 }

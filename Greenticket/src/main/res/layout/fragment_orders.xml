@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".DeviceFragment" >
-    //dk.greenticket.greenticket.PullToRefresh
 
     <dk.greenticket.greenticket.PullToRefreshListView
         android:layout_width="fill_parent"

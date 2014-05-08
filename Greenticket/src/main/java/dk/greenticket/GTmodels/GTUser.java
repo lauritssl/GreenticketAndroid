@@ -130,7 +130,7 @@ public class GTUser{
 
         GTDatabase db = new GTDatabase(context);
         if(application.isNetworkAvailable()){
-            db.clear();
+            db.clearOrders();
             GTConnect con = new GTConnect("users/"+email+"/orders");
             JSONObject result = con.GET();
             try {
@@ -207,42 +207,60 @@ public class GTUser{
         return true;
     }
 
-    private boolean loadEvents(){
-        GTConnect con = new GTConnect("users/"+email+"/events");
-        JSONObject result = con.GET();
-        try {
-            if (result.getBoolean("success")){
+    public boolean loadEvents(){
+        GTApplication application = (GTApplication) context.getApplicationContext();
 
-                JSONArray resultEvents = result.getJSONArray("events");
-                for(int i = 0; i < resultEvents.length(); i++ ) {
-                    JSONObject event = resultEvents.getJSONObject(i);
-                    String title = event.getString("title");
-                    String coverLink = event.getString("cover");
-                    if (!coverLink.equalsIgnoreCase("null")){
-                        coverLink = "https://greenticket.dk" + coverLink;
+        GTDatabase db = new GTDatabase(context);
+        if(application.isNetworkAvailable()){
+            db.clearEvents();
+            GTConnect con = new GTConnect("users/"+email+"/events/admin");
+            JSONObject result = con.GET();
+            try {
+
+                if (result.getBoolean("success")){
+                    JSONArray adminEvents = result.getJSONArray("events");
+                    for(int i = 0; i < adminEvents.length(); i++ ) {
+
+                        JSONObject event = adminEvents.getJSONObject(i);
+                        GTEvent gtevent;
+                        if (event.has("title")){
+                            String title =  event.getString("title");
+
+                            String coverLink = event.getString("cover");
+
+                            if (!coverLink.equalsIgnoreCase("null")){
+                                coverLink = "https://greenticket.dk" + coverLink;
+                            }
+                            String orgName = "";
+
+                            if (!event.isNull("org")){
+                                orgName = event.getJSONObject("org").getString("name");
+
+                            }
+                            String date = event.getString("eventStart");
+                            String endDate = event.getString("eventEnd");
+                            Integer id = event.getInt("id");
+                            String activeString = event.getString("active");
+                            Boolean active = activeString.equalsIgnoreCase("1");
+
+
+                            gtevent = new GTEvent(title,coverLink,date,endDate,id,active, orgName);
+                            db.addAdminEvent(gtevent);
+                        }else{
+                            Log.e("GTUser ", "No Event on order");
+                        }
+
                     }
-                    String orgName = "";
-
-                    if (event.getJSONObject("organisation").has("name")){
-                        orgName = event.getJSONObject("organisation").getString("name");
-                    }
-
-                    String date = event.getString("eventStart");
-                    String endDate = event.getString("eventEnd");
-                    Integer id = event.getInt("id");
-                    String activeString = event.getString("active");
-                    Boolean active = activeString.equalsIgnoreCase("1");
-
-                    GTEvent gtEvent = new GTEvent(title,coverLink,date,endDate,id,active, orgName);
-
-                    events.add(gtEvent);
                 }
-                return true;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
-        return false;
+        events.clear();
+        events = db.getAdminEvents();
+        return true;
     }
 
 

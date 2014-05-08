@@ -40,6 +40,8 @@ public class GTDatabase{
         }else{
             return db.update(GTDatabaseHelper.TABLE_NAME_TICKETS, values,GTDatabaseHelper.TICKETS_QR+" = ?", args);
         }
+
+
     }
 
     public long addEvent(GTEvent event) {
@@ -95,12 +97,12 @@ public class GTDatabase{
 
         String[] args = {Integer.toString(event.getId())};
         Cursor c = db.query(GTDatabaseHelper.TABLE_NAME_ADMINEVENTS, null,GTDatabaseHelper.ADMINEVENTS_ID+" = ?", args,null,null,null);
-
         if(c.getCount() <= 0){
             return db.insert(GTDatabaseHelper.TABLE_NAME_ADMINEVENTS, null, values);
         }else{
             return db.update(GTDatabaseHelper.TABLE_NAME_ADMINEVENTS, values,GTDatabaseHelper.ADMINEVENTS_ID+" = ?", args);
         }
+
     }
 
     public GTTicket getTicket(String qrID){
@@ -208,6 +210,24 @@ public class GTDatabase{
         return adminEvents;
     }
 
+    public void clearOrders(){
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        db.delete(GTDatabaseHelper.TABLE_NAME_TICKETS, null, null);
+        db.delete(GTDatabaseHelper.TABLE_NAME_EVENTS, null, null);
+        db.delete(GTDatabaseHelper.TABLE_NAME_ORDERS, null, null);
+
+    }
+
+    public void clearEvents(){
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        db.delete(GTDatabaseHelper.TABLE_NAME_ADMINEVENTS, null, null);
+
+    }
+
+
+
     public void clear(){
         SQLiteDatabase db = helper.getWritableDatabase();
 
@@ -220,7 +240,7 @@ public class GTDatabase{
 
     static class GTDatabaseHelper extends SQLiteOpenHelper {
 
-        private static final int DATABASE_VERSION = 5;
+        private static final int DATABASE_VERSION = 6;
         private static final String DATABASE_NAME = "GT";
 
         private static final String TABLE_NAME_ORDERS = "Orders";

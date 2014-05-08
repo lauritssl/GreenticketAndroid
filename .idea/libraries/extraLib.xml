@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="extraLib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Greenticket/lib/extraLib.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

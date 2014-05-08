@@ -11,6 +11,7 @@
     <string name="title_activity_loggedin">LoggedinActivity</string>
     <string name="title_activity_show_tickets">ShowTicketsActivity</string>
     <string name="title_activity_web">WebActivity</string>
+    <string name="title_activity_zbarscanner">ZbarScanner</string>
     <string name="settings_account">account</string>
     <string name="settings_settings">settings</string>
     <string name="settings_signout">Sign out</string>
@@ -33,6 +34,7 @@
     <string name="pull_to_refresh_refreshing_label">Loading...</string>
     <string name="pull_to_refresh_tap_label">Tap to refresh...</string>
 
+    <string name="no_camera">Rear Facing Camera Unavailable</string>
 
 
 </resources>
