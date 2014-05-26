@@ -25,10 +25,14 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.MapBuilder;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import dk.greenticket.GTmodels.GTConnect;
 import dk.greenticket.GTmodels.GTDatabase;
 import dk.greenticket.GTmodels.GTUser;
 
@@ -88,6 +92,8 @@ public class MainActivity extends Activity{
         loginBack.setVisibility(View.VISIBLE);
         RelativeLayout loginButton = (RelativeLayout) findViewById(R.id.LoginButton);
         loginButton.setVisibility(View.VISIBLE);
+        TextView forgotPassword = (TextView) findViewById(R.id.forgotpassword);
+        forgotPassword.setVisibility(View.VISIBLE);
 
         RelativeLayout FBLoginButton = (RelativeLayout) findViewById(R.id.FBLoginButton);
         FBLoginButton.setVisibility(View.INVISIBLE);
@@ -107,11 +113,32 @@ public class MainActivity extends Activity{
         loginBack.setVisibility(View.INVISIBLE);
         RelativeLayout loginButton = (RelativeLayout) findViewById(R.id.LoginButton);
         loginButton.setVisibility(View.INVISIBLE);
+        TextView forgotPassword = (TextView) findViewById(R.id.forgotpassword);
+        forgotPassword.setVisibility(View.INVISIBLE);
 
         RelativeLayout FBLoginButton = (RelativeLayout) findViewById(R.id.FBLoginButton);
         FBLoginButton.setVisibility(View.VISIBLE);
         RelativeLayout GTLoginButton = (RelativeLayout) findViewById(R.id.GTLoginButton);
         GTLoginButton.setVisibility(View.VISIBLE);
+
+        RelativeLayout resetPasswordButton = (RelativeLayout) findViewById(R.id.forgotPasswordSend);
+        resetPasswordButton.setVisibility(View.INVISIBLE);
+
+
+
+    }
+    public void ForgotPassword(View view){
+        RelativeLayout forgotPasswordSend = (RelativeLayout) findViewById(R.id.forgotPasswordSend);
+        forgotPasswordSend.setVisibility(View.VISIBLE);
+        RelativeLayout loginPassword = (RelativeLayout) findViewById(R.id.LoginPassword);
+        loginPassword.setVisibility(View.INVISIBLE);
+        RelativeLayout loginButton = (RelativeLayout) findViewById(R.id.LoginButton);
+        loginButton.setVisibility(View.INVISIBLE);
+        TextView forgotPassword = (TextView) findViewById(R.id.forgotpassword);
+        forgotPassword.setVisibility(View.INVISIBLE);
+
+        RelativeLayout resetPasswordButton = (RelativeLayout) findViewById(R.id.forgotPasswordSend);
+        resetPasswordButton.setVisibility(View.VISIBLE);
 
 
 
@@ -186,6 +213,55 @@ public class MainActivity extends Activity{
                 }).start();
         }else{
                 Toast.makeText(getApplicationContext(),getResources().getString(R.string.no_network), Toast.LENGTH_LONG).show();
+        }
+
+
+    }
+
+    public void ForgotPasswordSend(View view){
+        GTApplication application = (GTApplication) getApplication();
+        if(application.isNetworkAvailable()){
+            TextView emailField = (TextView) findViewById(R.id.loginEmailField);
+            final String email = emailField.getText().toString();
+            new Thread(new Runnable(){
+                public void run(){
+                    GTConnect con = new GTConnect("users/"+email+"/forgot");
+                    JSONObject result = con.POST(null);
+                    try{
+                        if (result.getBoolean("success")){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(),getResources().getString(R.string.forgotpasswordSent), Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }else{
+                            if(result.getString("message").equalsIgnoreCase("User Does not exist")){
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(),getResources().getString(R.string.forgotpasswordErrorUser), Toast.LENGTH_LONG).show();
+                                    }
+                                });
+
+                            }else{
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(),getResources().getString(R.string.login_fail), Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+                        }
+                    } catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+
+        }else{
+            Toast.makeText(getApplicationContext(),getResources().getString(R.string.no_network), Toast.LENGTH_LONG).show();
         }
 
 

@@ -86,12 +86,12 @@ public class GTConnect{
         HttpClient httpClient = new DefaultHttpClient();
         Log.i("GTConnect:URL", urlPath);
 
-        Log.i("GTConnect:PARA", para.toString());
+        if(para != null) Log.i("GTConnect:PARA", para.toString());
         try {
             HttpPost httpPost = new HttpPost(urlPath);
             httpPost.addHeader("Authorization", hash);
             httpPost.addHeader("User-Agent", userAgent);
-            httpPost.setEntity(new UrlEncodedFormEntity(para, HTTP.UTF_8));
+            if(para != null) httpPost.setEntity(new UrlEncodedFormEntity(para, HTTP.UTF_8));
 
             BasicResponseHandler responseHandler = new BasicResponseHandler();
             result = httpClient.execute(httpPost, responseHandler);

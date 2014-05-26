@@ -27,6 +27,10 @@
     <string name="main_login_with_gt">Login with Greenticket</string>
     <string name="main_login">Login</string>
     <string name="main_login_back_to_loginscreen">Back to login screen</string>
+    <string name="main_forgotpassword">forgot password?</string>
+    <string name="forgotpasswordSent">We just sent you a mail..</string>
+    <string name="forgotpasswordErrorUser">User does not exist..</string>
+    <string name="main_forgotpasswordSend">Reset my password</string>
 
     <string name="pull_to_refresh_pull_label">Pull to refresh...</string>
     <string name="pull_to_refresh_release_label">Release to refresh...</string>

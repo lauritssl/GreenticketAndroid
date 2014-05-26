@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.hardware.display.DisplayManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,10 +41,16 @@ import dk.greenticket.GTmodels.GTUser;
 
 public class ShowTicketsActivity extends FragmentActivity {
     GTTicketPageAdapter pageAdapter;
+    float screenBrightness;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_tickets);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+        screenBrightness = layoutParams.screenBrightness;
+        layoutParams.screenBrightness = 1.0F;
+        getWindow().setAttributes(layoutParams);
 
         Integer orderID = getIntent().getExtras().getInt("order");
 
@@ -85,6 +93,25 @@ public class ShowTicketsActivity extends FragmentActivity {
     public void onStop() {
         super.onStop();
         EasyTracker.getInstance(this).activityStop(this);
+        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+        layoutParams.screenBrightness = screenBrightness;
+        getWindow().setAttributes(layoutParams);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+        screenBrightness = layoutParams.screenBrightness;
+        layoutParams.screenBrightness = 1.0F;
+        getWindow().setAttributes(layoutParams);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     private List<Fragment> getFragments(ArrayList<GTTicket> tickets){
