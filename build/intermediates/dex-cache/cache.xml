@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="/Users/lalan/Developer/GreenticketAndroid/Greenticket/build/intermediates/pre-dexed/debug/zxing-9fa1f3e3ef3c2f9e224bfa71685e21ce13a93be8.jar"
+        jar="/Users/lalan/Developer/GreenticketAndroid/Greenticket/lib/zxing.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="80a402b12accd66d4be7e5dbcb44e42baa0bdd7c"/>
+    <item
+        dex="/Users/lalan/Developer/GreenticketAndroid/Greenticket/build/intermediates/pre-dexed/debug/Shutterbug-ab8d2f7de6b59d0dbc46723ea2a63f80ac73edc8.jar"
+        jar="/Users/lalan/Developer/GreenticketAndroid/Greenticket/lib/Shutterbug.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="a8cddf69c52e040ba2ba1dbf9cc9404b083bd351"/>
+    <item
+        dex="/Users/lalan/Developer/GreenticketAndroid/Greenticket/build/intermediates/pre-dexed/debug/support-v4-13.0.0-fdfdc97fbb578c244daea4f9f2b39c1b4322920c.jar"
+        jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-v4/13.0.0/support-v4-13.0.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="3fe75433da602500cc71fcc1c46e5550291dd45d"/>
+    <item
+        dex="/Users/lalan/Developer/GreenticketAndroid/Greenticket/build/intermediates/pre-dexed/debug/libGoogleAnalyticsServices-2d41573cfcd44fd71b1c30966357ecda17dd3fad.jar"
+        jar="/Users/lalan/Developer/GreenticketAndroid/Greenticket/lib/libGoogleAnalyticsServices.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="e887c6c9b31b39a39b0eaba981448b78902ea813"/>
+    <item
+        dex="/Users/lalan/Developer/GreenticketAndroid/Greenticket/build/intermediates/pre-dexed/debug/classes-d1ae9344a4f4df7a2721ac9a2c0032357e003b70.jar"
+        jar="/Users/lalan/Developer/GreenticketAndroid/Greenticket/build/intermediates/exploded-aar/GreenticketAndroid.libraries/facebook/unspecified/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="6915770edf3be4f163d09251394514f670338281"/>
+
+</pre-dex-items>
